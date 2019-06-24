@@ -1,0 +1,25 @@
+{
+  "name": "NuStrength",
+  "short_name": "NuStrength",
+  "icons": [
+    {
+      "src": "./img/manifest/64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/manifest/128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/manifest/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#010101"
+}
