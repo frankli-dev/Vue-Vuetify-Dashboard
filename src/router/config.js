@@ -67,7 +67,7 @@ export const protectedRoute = [
         path: "/deals",
         name: "Deals",
         component: () =>
-          import(/* webpackChunkName: "routes" */ `@/views/DailyData.vue`),
+          import(/* webpackChunkName: "routes" */ `@/views/Deals.vue`),
         meta: { title: "Deals", icon: "assignment" }
       },
       {
