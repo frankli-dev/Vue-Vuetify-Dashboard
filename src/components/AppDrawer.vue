@@ -1,7 +1,13 @@
 <template>
-  <v-navigation-drawer class="app--drawer" :mini-variant.sync="mini" app v-model="$store.state.showDrawer" width="300">
+  <v-navigation-drawer
+    class="app--drawer"
+    :mini-variant.sync="mini"
+    app
+    v-model="$store.state.showDrawer"
+    width="300"
+  >
     <v-toolbar color="primary darken-1" dark>
-      <img src="/img/logo.png" height="36" alt="NuStrength" />
+      <img src="/img/logo.png" height="36" alt="CtM-Dashboard">
     </v-toolbar>
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
       <v-list dense expand>
@@ -21,7 +27,12 @@
             </v-list-tile>
             <template v-for="subItem in item.items">
               <!--sub group-->
-              <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
+              <v-list-group
+                v-if="subItem.items"
+                :key="subItem.name"
+                :group="subItem.group"
+                sub-group="sub-group"
+              >
                 <v-list-tile slot="activator" ripple="ripple">
                   <v-list-tile-content>
                     <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -89,8 +100,8 @@
   </v-navigation-drawer>
 </template>
 <script>
-import menu from "@/api/menu"
-import VuePerfectScrollbar from "vue-perfect-scrollbar"
+import menu from "@/api/menu";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
 export default {
   name: "AppDrawer",
   components: {
@@ -103,38 +114,41 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160
       }
-    }
+    };
   },
   computed: {
     computeGroupActive() {
-      return true
+      return true;
     },
 
     sideToolbarColor() {
-      return this.$vuetify.options.extra.sideNav
+      return this.$vuetify.options.extra.sideNav;
     }
   },
   created() {},
 
   methods: {
     genChildTarget(item, subItem) {
-      if (subItem.href) return
+      if (subItem.href) return;
       if (subItem.component) {
         return {
           name: subItem.component
-        }
+        };
       }
-      return { name: `${item.group}/${subItem.name}` }
+      return { name: `${item.group}/${subItem.name}` };
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
-.app--drawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    padding-top 20px
-    overflow: auto
+.app--drawer {
+  overflow: hidden;
+
+  .drawer-menu--scroll {
+    height: calc(100vh - 48px);
+    padding-top: 20px;
+    overflow: auto;
+  }
+}
 </style>
