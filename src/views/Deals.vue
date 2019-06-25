@@ -130,20 +130,82 @@
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field
+                  <v-menu
+                    ref="menuDateActivation"
+                    v-model="menuDateActivation"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="dateActivation"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="dateActivation"
+                        label="Activation"
+                        prepend-icon="event"
+                        v-on="on"
+                        suffix="AEST"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="dateActivation" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="primary" @click="menuDateActivation = false">Cancel</v-btn>
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="$refs.menuDateActivation.save(dateActivation)"
+                      >OK</v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                  <!-- <v-text-field
                     label="Activation"
                     value="01/07/2019 12:30:00"
                     type="date-with-time"
                     suffix="AEST"
-                  ></v-text-field>
+                  ></v-text-field>-->
                 </v-flex>
                 <v-flex xs12 sm6>
-                  <v-text-field
+                  <v-menu
+                    ref="menuDateExpires"
+                    v-model="menuDateExpires"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="dateExpires"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="dateExpires"
+                        label="Expires"
+                        prepend-icon="event"
+                        v-on="on"
+                        suffix="AEST"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="dateExpires" no-title scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="primary" @click="menuDateExpires = false">Cancel</v-btn>
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="$refs.menuDateExpires.save(dateExpires)"
+                      >OK</v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                  <!-- <v-text-field
                     label="Expires"
                     value="01/07/2019 12:30:00"
                     type="date-with-time"
                     suffix="AEST"
-                  ></v-text-field>
+                  ></v-text-field>-->
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
@@ -232,7 +294,10 @@ export default {
       select: null,
       states: ["Brisbane", "Sydney", "Melbourne"],
 
-      slider: 45
+      slider: 45,
+
+      dateActivation: "2019-06-05",
+      dateExpires: "2019-06-07"
     };
   },
   watch: {
