@@ -21,7 +21,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit("auth_request");
       axios({
-        url: "http://ctm-api-dev.azurewebsites.net/api/token",
+        url: "https://ctm-api-dev.azurewebsites.net/api/token",
         data: user,
         method: "POST"
       })
