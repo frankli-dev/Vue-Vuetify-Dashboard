@@ -45,7 +45,7 @@ export const protectedRoute = [
     path: "/",
     component: DefaultLayout,
     meta: { title: "Home", group: "apps", icon: "" },
-    redirect: "/users",
+    redirect: "/deals",
     children: [
       {
         path: "/users",
