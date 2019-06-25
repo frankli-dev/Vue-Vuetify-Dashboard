@@ -3,7 +3,10 @@
     <v-toolbar-title>
       <v-toolbar-side-icon @click="handleDrawerToggle"></v-toolbar-side-icon>
     </v-toolbar-title>
-    <div v-if="$vuetify.breakpoint.xsOnly && $route.meta.title" class="title-mobile">{{ $route.meta.title }}</div>
+    <div
+      v-if="$vuetify.breakpoint.xsOnly && $route.meta.title"
+      class="title-mobile"
+    >{{ $route.meta.title }}</div>
     <v-text-field
       v-else
       flat
@@ -15,7 +18,13 @@
     ></v-text-field>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
+      <v-menu
+        offset-y
+        origin="center center"
+        class="elelvation-1"
+        :nudge-bottom="14"
+        transition="scale-transition"
+      >
         <v-btn icon flat slot="activator">
           <v-badge color="red" overlap>
             <span slot="badge">3</span>
@@ -27,7 +36,7 @@
       <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
         <v-btn icon large flat slot="activator">
           <v-avatar size="30px">
-            <img src="/static/avatar/man_4.jpg" alt="Michael Wang" />
+            <img src="/static/avatar/man_4.jpg" alt="Michael Wang">
           </v-avatar>
         </v-btn>
         <v-list class="pa-0">
@@ -55,8 +64,8 @@
   </v-toolbar>
 </template>
 <script>
-import NotificationList from "@/components/widgets/list/NotificationList"
-import Util from "@/util"
+import NotificationList from "@/components/widgets/list/NotificationList";
+import Util from "@/util";
 export default {
   name: "AppToolbar",
   components: {
@@ -84,26 +93,28 @@ export default {
           click: this.handleLogut
         }
       ]
-    }
+    };
   },
   computed: {
     toolbarColor() {
-      return this.$vuetify.options.extra.mainNav
+      return this.$vuetify.options.extra.mainNav;
     }
   },
   methods: {
     handleDrawerToggle() {
-      this.$store.state.showDrawer = !this.$store.state.showDrawer
+      this.$store.state.showDrawer = !this.$store.state.showDrawer;
     },
     handleFullScreen() {
-      Util.toggleFullScreen()
+      Util.toggleFullScreen();
     },
     handleLogut() {
       //handle logout
-      this.$router.push("/auth/login")
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
     },
     handleSetting() {},
     handleProfile() {}
   }
-}
+};
 </script>

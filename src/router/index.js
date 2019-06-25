@@ -1,25 +1,33 @@
-import Vue from "vue"
-import Router from "vue-router"
-import { publicRoute, protectedRoute } from "./config"
-import NProgress from "nprogress"
-import "nprogress/nprogress.css"
-const routes = publicRoute.concat(protectedRoute)
+import Vue from "vue";
+import store from "../store/";
+import Router from "vue-router";
+import { publicRoute, protectedRoute } from "./config";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+const routes = publicRoute.concat(protectedRoute);
 
-Vue.use(Router)
+Vue.use(Router);
 const router = new Router({
   mode: "history",
   linkActiveClass: "active",
   routes: routes
-})
+});
 // router gards
 router.beforeEach((to, from, next) => {
-  NProgress.start()
-  //auth route is authenticated
-  next()
-})
+  NProgress.start();
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
+    }
+    next("/auth/login");
+  } else {
+    next();
+  }
+});
 
 router.afterEach(() => {
-  NProgress.done()
-})
+  NProgress.done();
+});
 
-export default router
+export default router;

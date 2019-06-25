@@ -44,18 +44,27 @@ export default {
   data: () => ({
     loading: false,
     model: {
-      username: "admin@isocked.com",
-      password: "password"
+      username: "andres@ctm.app",
+      password: "L3tM31n@"
     }
   }),
 
   methods: {
     login() {
       this.loading = true;
-      // handle login
-      setTimeout(() => {
-        this.$router.push("/deals");
-      }, 1000);
+      let username = this.model.username;
+      let password = this.model.password;
+      console.log(username, password);
+      this.$store
+        .dispatch("login", { username, password })
+        .then(() => {
+          this.loading = false;
+          this.$router.push("/");
+        })
+        .catch(err => {
+          this.loading = false;
+          console.log(err);
+        });
     }
   }
 };

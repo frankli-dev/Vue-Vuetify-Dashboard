@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import ThemeSettings from "@/components/ThemeSettings"
+import ThemeSettings from "@/components/ThemeSettings";
 
 export default {
   components: {
@@ -26,16 +26,24 @@ export default {
         text: "",
         color: ""
       }
-    }
+    };
   },
   created() {
     // add app events
+    // this.$http.interceptors.response.use(undefined, function(err) {
+    //   return new Promise(function(resolve, reject) {
+    //     if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+    //       this.$store.dispatch(logout);
+    //     }
+    //     throw err;
+    //   });
+    // });
   },
   methods: {
     openThemeSettings() {
-      this.$vuetify.goTo(0)
-      this.rightDrawer = !this.rightDrawer
+      this.$vuetify.goTo(0);
+      this.rightDrawer = !this.rightDrawer;
     }
   }
-}
+};
 </script>

@@ -44,13 +44,18 @@ export const protectedRoute = [
   {
     path: "/",
     component: DefaultLayout,
-    meta: { title: "Home", group: "apps", icon: "" },
+    meta: { title: "Home", group: "apps", icon: "", requiresAuth: true },
     redirect: "/deals",
     children: [
       {
         path: "/users",
         name: "Users",
-        meta: { title: "Users", group: "apps", icon: "assignment_ind" },
+        meta: {
+          title: "Users",
+          group: "apps",
+          icon: "assignment_ind",
+          requiresAuth: true
+        },
         component: () =>
           import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard.vue")
       },
@@ -68,14 +73,18 @@ export const protectedRoute = [
         name: "Deals",
         component: () =>
           import(/* webpackChunkName: "routes" */ `@/views/Deals.vue`),
-        meta: { title: "Deals", icon: "assignment" }
+        meta: { title: "Deals", icon: "assignment", requiresAuth: true }
       },
       {
         path: "/solutions",
         name: "Solutions",
         component: () =>
           import(/* webpackChunkName: "routes" */ `@/views/DailyData.vue`),
-        meta: { title: "Solutions", icon: "assignment_turned_in" }
+        meta: {
+          title: "Solutions",
+          icon: "assignment_turned_in",
+          requiresAuth: true
+        }
       }
     ]
   }

@@ -7,10 +7,8 @@
             <v-card class="elevation-1 pa-3">
               <v-card-text>
                 <div class="layout column align-center">
-                  <img src="/static/m.png" alt="Vue Material Admin" width="120" height="120" />
-                  <h1 class="flex my-4 primary--text">
-                    Material Admin Template
-                  </h1>
+                  <img src="/static/m.png" alt="Vue Material Admin" width="120" height="120">
+                  <h1 class="flex my-4 primary--text">Material Admin Template</h1>
                 </div>
                 <v-form>
                   <v-text-field
@@ -56,20 +54,29 @@ export default {
   data: () => ({
     loading: false,
     model: {
-      username: "admin@isocked.com",
-      password: "password"
+      username: "andres@ctm.app",
+      password: "L3tM31n@"
     }
   }),
 
   methods: {
     login() {
-      this.loading = true
-      setTimeout(() => {
-        this.$router.push("/dashboard")
-      }, 1000)
+      this.loading = true;
+      let username = this.model.username;
+      let password = this.model.password;
+      this.$store
+        .dispatch("login", { username, password })
+        .then(() => {
+          this.loading = false;
+          this.$router.push("/");
+        })
+        .catch(err => {
+          this.loading = false;
+          console.log(err);
+        });
     }
   }
-}
+};
 </script>
 <style scoped lang="css">
 .split-bg {
