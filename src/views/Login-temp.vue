@@ -65,7 +65,7 @@ export default {
       let username = this.model.username;
       let password = this.model.password;
       this.$store
-        .dispatch("login", { username, password })
+        .dispatch("app/login", { username, password })
         .then(() => {
           this.loading = false;
           this.$router.push("/");

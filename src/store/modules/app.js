@@ -1,3 +1,4 @@
+import axios from "axios";
 const state = {
   items: [],
   checkoutStatus: null,
@@ -16,6 +17,7 @@ const getters = {
 // actions
 const actions = {
   login({ commit }, user) {
+    console.log(user);
     return new Promise((resolve, reject) => {
       commit("auth_request");
       axios({

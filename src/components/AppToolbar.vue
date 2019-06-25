@@ -109,8 +109,8 @@ export default {
     },
     handleLogut() {
       //handle logout
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
+      this.$store.dispatch("app/logout").then(() => {
+        this.$router.push("/auth/login");
       });
     },
     handleSetting() {},
