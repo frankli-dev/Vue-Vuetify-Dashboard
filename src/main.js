@@ -14,6 +14,9 @@ const token = localStorage.getItem("token");
 if (token) {
   Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
 }
+Vue.prototype.$http.defaults.headers.common["Accept"] = "application/json";
+Vue.prototype.$http.defaults.headers.common["Content-Type"] =
+  "application/x-www-form-urlencoded";
 new Vue({
   router,
   store,

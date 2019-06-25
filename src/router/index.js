@@ -16,7 +16,8 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   NProgress.start();
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
+    console.log(store.getters["app/isLoggedIn"]);
+    if (store.getters["app/isLoggedIn"]) {
       next();
       return;
     }

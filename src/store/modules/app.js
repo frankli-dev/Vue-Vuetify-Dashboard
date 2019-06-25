@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 const state = {
   items: [],
   checkoutStatus: null,
@@ -22,12 +23,12 @@ const actions = {
       commit("auth_request");
       axios({
         url: "https://ctm-api-dev.azurewebsites.net/api/token",
-        data: user,
-        method: "POST"
+        method: "post",
+        data: qs.stringify(user)
       })
         .then(resp => {
-          const token = resp.data.token;
-          const user = resp.data.user;
+          const token = resp.data.data.access_token;
+          console.log(token);
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = token;
           commit("auth_success", token, user);
