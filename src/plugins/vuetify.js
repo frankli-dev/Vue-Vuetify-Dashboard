@@ -1,10 +1,10 @@
-import Vue from "vue"
-import Vuetify from "vuetify/lib"
-import "../theme/default.styl"
+import Vue from "vue";
+import Vuetify from "vuetify/lib";
+import "../theme/default.styl";
 Vue.use(Vuetify, {
   theme: {
-    primary: "#010101",
-    secondary: "#e7792a",
+    primary: "#1C3F94",
+    secondary: "#424242",
     accent: "#82B1FF",
     error: "#FF5252",
     info: "#2196F3",
@@ -12,4 +12,4 @@ Vue.use(Vuetify, {
     warning: "#FFC107"
   },
   customProperties: true
-})
+});
