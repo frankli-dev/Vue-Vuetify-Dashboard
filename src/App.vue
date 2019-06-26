@@ -9,7 +9,7 @@
       </v-btn>
     </v-snackbar>
   </div>
-</template>
+</template> 
 
 <script>
 import ThemeSettings from "@/components/ThemeSettings";
