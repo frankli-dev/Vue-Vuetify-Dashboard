@@ -101,7 +101,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card class="mb-5" color="grey lighten-1" height="200px">Artwork</v-card>
+          <DropzoneComp/>
           <form>
             <v-container>
               <v-layout row wrap>
@@ -254,11 +254,13 @@
 
 <script>
 import DateField from "@/components/helper/DateField";
+import DropzoneComp from "@/components/DropzoneComp";
 
 export default {
   name: "Deals",
   components: {
-    DateField
+    DateField, 
+    DropzoneComp
   },
   data() {
     return {
