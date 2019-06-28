@@ -2,107 +2,134 @@
   <v-container fluid>
     <v-stepper v-model="e1">
       <v-stepper-header>
-        <v-stepper-step :complete="e1 > 1" step="1" editable>Target</v-stepper-step>
+        <v-stepper-step :complete="e1 > 1" step="1" editable=""
+          >Target</v-stepper-step
+        >
 
         <v-divider></v-divider>
 
-        <v-stepper-step :complete="e1 > 2" step="2">Zone</v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2" editable=""
+          >Zone</v-stepper-step
+        >
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="3">Offer</v-stepper-step>
+        <v-stepper-step :complete="e1 > 3" step="3" editable=""
+          >Offer</v-stepper-step
+        >
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card class="mb-5">
-            <v-flex xs6 sm6 md6>
-              <v-select
-                v-model="targetInterests"
-                :items="ctmMatrix"
-                box
-                chips
-                label="Interest Category"
-                multiple
-              ></v-select>
-            </v-flex>
-            <v-flex xs3 sm3 md3>
-              <v-text-field label="Interest is > than" placeholder="20"></v-text-field>
-            </v-flex>
-            <v-flex xs6 sm6 md6>
-              <v-select
-                v-model="targetFuelType"
-                :items="fuelType"
-                box
-                chips
-                label="Fuel Preference"
-                multiple
-              ></v-select>
-              <v-select
-                v-model="targetFuelBrand"
-                :items="fuelBrand"
-                box
-                chips
-                label="Fuel Brand"
-                multiple
-              ></v-select>
-            </v-flex>
-          </v-card>
+          <v-form ref="form1">
+            <v-card class="mb-5">
+              <v-flex xs6 sm6 md6>
+                <v-select
+                  v-model="targetInterests"
+                  :items="ctmMatrix"
+                  box
+                  chips
+                  label="Interest Category"
+                  multiple
+                  v-validate="required"
+                  :rules="itemCount"
+                ></v-select>
+              </v-flex>
+              <v-flex xs3 sm3 md3>
+                <v-text-field
+                  label="Interest is > than"
+                  :counter="10"
+                  v-model="interest"
+                  v-validate="required"
+                  :rules="inputRules"
+                  @input="$v.interest.$touch()"
+                  @blur="$v.interest.$touch()"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs6 sm6 md6>
+                <v-select
+                  v-model="targetFuelType"
+                  :items="fuelType"
+                  box
+                  chips
+                  label="Fuel Preference"
+                  multiple
+                  v-validate="required"
+                  :rules="itemCount"
+                ></v-select>
+                <v-select
+                  v-model="targetFuelBrand"
+                  :items="fuelBrand"
+                  box
+                  chips
+                  label="Fuel Brand"
+                  multiple
+                  v-validate="required"
+                  :rules="itemCount"
+                ></v-select>
+              </v-flex>
+            </v-card>
 
-          <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
+            <v-btn color="primary" @click="targetNext">Continue</v-btn>
 
-          <v-btn flat>Cancel</v-btn>
+            <v-btn flat>Cancel</v-btn>
+          </v-form>
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-expansion-panel>
-            <v-expansion-panel-content>
-              <template v-slot:header>
-                <div>Post Code</div>
-              </template>
-              <v-card>
-                <v-select
-                  v-model="targetPostCode"
-                  :items="postCode"
-                  box
-                  chips
-                  label="Post Code(s)"
-                  multiple
-                ></v-select>
-              </v-card>
-            </v-expansion-panel-content>
-            <v-expansion-panel-content>
-              <template v-slot:header>
-                <div>Location &amp; radius</div>
-              </template>
-              <v-card>
-                <v-autocomplete
-                  v-model="select"
-                  :loading="loading"
-                  :items="items"
-                  :search-input.sync="search"
-                  cache-items
-                  class="mx-3"
-                  flat
-                  hide-no-data
-                  hide-details
-                  label="Location"
-                  solo-inverted
-                ></v-autocomplete>
+          <v-form ref="form2">
+            <v-expansion-panel>
+              <v-expansion-panel-content>
+                <template v-slot:header>
+                  <div>Post Code</div>
+                </template>
+                <v-card>
+                  <v-select
+                    v-model="targetPostCode"
+                    :items="postCode"
+                    box
+                    chips
+                    label="Post Code(s)"
+                    multiple
+                    v-validate="required"
+                    :rules="itemCount"
+                  ></v-select>
+                </v-card>
+              </v-expansion-panel-content>
+              <v-expansion-panel-content>
+                <template v-slot:header>
+                  <div>Location &amp; radius</div>
+                </template>
+                <v-card>
+                  <v-autocomplete
+                    ref="location"
+                    v-model="select"
+                    :loading="loading"
+                    :items="items"
+                    :search-input.sync="search"
+                    cache-items
+                    class="mx-3"
+                    flat
+                    hide-details
+                    label="Location"
+                    v-validate="required"
+                    error-message="Select Location"
+                  ></v-autocomplete>
 
-                <v-subheader class="pl-0">Radius</v-subheader>
-                <v-slider v-model="slider" thumb-label></v-slider>
-              </v-card>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-          <!-- -->
-          <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
+                  <v-subheader class="pl-0">Radius</v-subheader>
+                  <v-slider v-model="slider" thumb-label></v-slider>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <!-- -->
+            <v-btn color="primary" @click="zoneNext">Continue</v-btn>
 
-          <v-btn flat>Cancel</v-btn>
+            <v-btn flat>Cancel</v-btn>
+          </v-form>
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <DropzoneComp/>
-          <form>
+          <v-form ref="form3">
+            <DropzoneComp ref="dropzone" v-model="imageUrl"/>
             <v-container>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
@@ -112,6 +139,7 @@
                     :counter="50"
                     label="Internal Code/Title"
                     required
+                    :rules="inputRules"
                     @input="$v.name.$touch()"
                     @blur="$v.name.$touch()"
                   ></v-text-field>
@@ -123,6 +151,7 @@
                     :counter="150"
                     label="Customer Facing Title"
                     required
+                    :rules="inputRules"
                     @input="$v.custTitle.$touch()"
                     @blur="$v.custTitle.$touch()"
                   ></v-text-field>
@@ -153,12 +182,18 @@
                     </template>
                     <v-date-picker v-model="dateActivation" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menuDateActivation = false">Cancel</v-btn>
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="menuDateActivation = false"
+                        >Cancel</v-btn
+                      >
                       <v-btn
                         flat
                         color="primary"
                         @click="$refs.menuDateActivation.save(dateActivation)"
-                      >OK</v-btn>
+                        >OK</v-btn
+                      >
                     </v-date-picker>
                   </v-menu>
                   <!-- <v-text-field
@@ -192,12 +227,18 @@
                     </template>
                     <v-date-picker v-model="dateExpires" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menuDateExpires = false">Cancel</v-btn>
+                      <v-btn
+                        flat
+                        color="primary"
+                        @click="menuDateExpires = false"
+                        >Cancel</v-btn
+                      >
                       <v-btn
                         flat
                         color="primary"
                         @click="$refs.menuDateExpires.save(dateExpires)"
-                      >OK</v-btn>
+                        >OK</v-btn
+                      >
                     </v-date-picker>
                   </v-menu>
                   <!-- <v-text-field
@@ -245,7 +286,7 @@
               <v-btn @click="submit">submit</v-btn>
               <v-btn @click="clear">clear</v-btn>
             </v-container>
-          </form>
+          </v-form>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -253,21 +294,26 @@
 </template>
 
 <script>
-import DateField from "@/components/helper/DateField";
+// import DateField from "@/components/helper/DateField";
 import DropzoneComp from "@/components/DropzoneComp";
 
 export default {
   name: "Deals",
   components: {
-    DateField, 
+    //DateField,
     DropzoneComp
   },
   data() {
     return {
+      loading: false,
       e1: 0,
       clipped: false,
       drawer: true,
       fixed: false,
+      interest: "",
+
+      selectErrors: ["Select more than one."],
+      ctaErrors: ["Call to action please."],
 
       ctmMatrix: ["car", "health", "home", "foo", "bar", "fizz", "buzz"],
       targetInterests: ["car", "health", "home", "foo"],
@@ -278,9 +324,6 @@ export default {
       fuelBrand: ["BP", "Shell", "Caltex", "Freedom", "Puma"],
       targetFuelBrand: ["BP", "Shell", "Caltex", "Freedom", "Puma"],
 
-      fuelType: ["Work", "Home"],
-      targetFuelType: ["Work", "Home"],
-
       postCode: ["4000", "4226", "4220", "2000", "2226", "2220"],
       targetPostCode: ["4000", "4226"],
 
@@ -290,7 +333,6 @@ export default {
       title: "Wireframe",
       gradient: "to top, #1c3e94, #1c3e94",
 
-      loading: false,
       items: [],
       search: null,
       select: null,
@@ -299,7 +341,10 @@ export default {
       slider: 45,
 
       dateActivation: "2019-06-05",
-      dateExpires: "2019-06-07"
+      dateExpires: "2019-06-07",
+      inputRules: [v => v.length > 0 || "Input value please."],
+      itemCount: [v => v.length > 0 || "Select more than 1"],
+      imageUrl: null
     };
   },
   watch: {
@@ -308,6 +353,50 @@ export default {
     }
   },
   methods: {
+    sendData() {
+      this.loading = true;
+      console.log(this.$store);
+      let data = {offer: {
+            userId: "andres@ctm.app",
+            type: "Offer",
+            imageUrl: this.$refs.dropzone.getFiles(),
+            title: this.name,
+            content: "string",
+            openUrl: "string",
+            active: this.dateActivation,
+            expire: this.dateExpires
+          },
+          target: {
+            internal: this.name,
+            type: "Offer",
+            location: this.select,
+            interests: this.targetInterests,
+            interestMin: this.interest,
+            premium: true,
+            brand: true,
+            postCodes: this.targetPostCode,
+            geoTarget: {
+              latitude: 0,
+              longitude: 0,
+              radius: this.slider
+            },
+            sendNotification: new Date(),
+            message: "string"
+          }};
+          console.log(data);
+      this.$store
+        .dispatch("app/sendoffer", {
+          data
+        })
+        .then(() => {
+          this.loading = false;
+          this.$router.push("/");
+        })
+        .catch(err => {
+          this.loading = false;
+          console.log(err);
+        });
+    },
     querySelections(v) {
       this.loading = true;
       // Simulated ajax query
@@ -317,6 +406,39 @@ export default {
         });
         this.loading = false;
       }, 500);
+    },
+    submit() {
+      this.selectErrors = [];
+      if (!this.$refs.form1.validate()) {
+        this.e1 = 1;
+      } else if (!this.$refs.form2.validate()) {
+        if (this.select == null) {
+          this.selectErrors.push("Input your location");
+        } else {
+          this.e1 = 2;
+        }
+      } else if (this.$refs.form3.validate()) {
+        //upload
+        this.sendData();
+      }
+    },
+    targetNext() {
+      if (this.$refs.form1.validate()) {
+        this.e1 = 2;
+      }
+    },
+    zoneNext() {
+      if (this.$refs.form2.validate()) {
+        //if (this.select != null) {
+        this.e1 = 3;
+        //}
+      }
+    },
+    clear() {
+      this.interest = "";
+      this.$refs.form2.reset();
+      this.$refs.form3.reset();
+      this.e1 = 1;
     }
   }
 };

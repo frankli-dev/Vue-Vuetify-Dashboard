@@ -23,8 +23,8 @@
   </v-container>
 </template>
 <script>
-import ChatContactList from "./ChatContactList"
-import ChatContactProfile from "./ChatContactProfile"
+import ChatContactList from "./ChatContactList";
+import ChatContactProfile from "./ChatContactProfile";
 export default {
   components: {
     ChatContactList,
@@ -34,15 +34,15 @@ export default {
     return {
       chat: null,
       selectedTab: null
-    }
+    };
   },
   computed: {
     showSidebar() {
-      return this.$route.params.uuid === undefined
+      return this.$route.params.uuid === undefined;
     },
     showWindow() {
-      return this.$route.params.uuid !== undefined
+      return this.$route.params.uuid !== undefined;
     }
   }
-}
+};
 </script>

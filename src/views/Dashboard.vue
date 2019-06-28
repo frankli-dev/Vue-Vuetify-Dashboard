@@ -4,16 +4,36 @@
       <v-layout row wrap>
         <!-- mini statistic start -->
         <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-facebook" title="100+" sub-title="Likes" color="indigo"></mini-statistic>
+          <mini-statistic
+            icon="fa fa-facebook"
+            title="100+"
+            sub-title="Likes"
+            color="indigo"
+          ></mini-statistic>
         </v-flex>
         <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-google" title="150+" sub-title="Connections" color="red"></mini-statistic>
+          <mini-statistic
+            icon="fa fa-google"
+            title="150+"
+            sub-title="Connections"
+            color="red"
+          ></mini-statistic>
         </v-flex>
         <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-twitter" title="200+" sub-title="Followers" color="light-blue"></mini-statistic>
+          <mini-statistic
+            icon="fa fa-twitter"
+            title="200+"
+            sub-title="Followers"
+            color="light-blue"
+          ></mini-statistic>
         </v-flex>
         <v-flex lg3 sm6 xs12>
-          <mini-statistic icon="fa fa-instagram" title="50+" sub-title="Shots" color="purple"></mini-statistic>
+          <mini-statistic
+            icon="fa fa-instagram"
+            title="50+"
+            sub-title="Shots"
+            color="purple"
+          ></mini-statistic>
         </v-flex>
         <!-- mini statistic  end -->
         <v-flex lg8 sm12 xs12>
@@ -136,7 +156,13 @@
           ></linear-statistic>
         </v-flex>
         <!-- Circle statistic -->
-        <v-flex lg4 sm12 xs12 v-for="(item, index) in trending" :key="'c-trending' + index">
+        <v-flex
+          lg4
+          sm12
+          xs12
+          v-for="(item, index) in trending"
+          :key="'c-trending' + index"
+        >
           <circle-statistic
             :title="item.subheading"
             :sub-title="item.headline"
@@ -153,15 +179,21 @@
         <v-flex lg6 sm12 xs12>
           <v-widget title="Activities" content-bg="white">
             <div slot="widget-content">
-              <ol class="timeline timeline-activity timeline-point-sm timeline-content-right">
-                <li class="timeline-block" v-for="(item, index) in activity" :key="index">
+              <ol
+                class="timeline timeline-activity timeline-point-sm timeline-content-right"
+              >
+                <li
+                  class="timeline-block"
+                  v-for="(item, index) in activity"
+                  :key="index"
+                >
                   <div class="timeline-point">
                     <v-circle dot large :color="item.color"></v-circle>
                   </div>
                   <div class="timeline-content">
-                    <time datetime="2018" class="subheading">{{ 
-                      item.timeString 
-                      }}</time>
+                    <time datetime="2018" class="subheading">{{
+                      item.timeString
+                    }}</time>
                     <div class="py-2 text--secondary" v-html="item.text"></div>
                   </div>
                 </li>

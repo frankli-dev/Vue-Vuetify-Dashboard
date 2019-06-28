@@ -86,7 +86,9 @@
                       <v-icon color="indigo">location_on</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                      <v-list-tile-title>{{ user.address.street }}</v-list-tile-title>
+                      <v-list-tile-title>{{
+                        user.address.street
+                      }}</v-list-tile-title>
                       <v-list-tile-sub-title
                         >{{ user.address.city }}, {{ user.address.state }}
                         {{ user.address.zipcode }}</v-list-tile-sub-title
@@ -109,23 +111,23 @@
 </template>
 
 <script>
-import { getUserById } from "@/api/user"
+import { getUserById } from "@/api/user";
 export default {
   data() {
     return {
       chat: null,
       selectedTab: null
-    }
+    };
   },
   computed: {
     user() {
       let Origin = {
         name: "Chat",
         avatar: ""
-      }
-      let user = getUserById(this.$route.params.uuid)
-      return Object.assign(Origin, user)
+      };
+      let user = getUserById(this.$route.params.uuid);
+      return Object.assign(Origin, user);
     }
   }
-}
+};
 </script>

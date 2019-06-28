@@ -1,6 +1,7 @@
 const Items = [
   {
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/ludwiczakpawel/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/ludwiczakpawel/128.jpg",
     timeString: "Just now",
     color: "primary",
     text: "Michael finished  one task just now."
@@ -29,12 +30,12 @@ const Items = [
     color: "cyan",
     text: "Li assigned a a task to Michael"
   }
-]
+];
 
 const getActivity = limit => {
-  return limit ? Items.slice(0, limit) : Items
-}
+  return limit ? Items.slice(0, limit) : Items;
+};
 
 export default {
   getActivity
-}
+};

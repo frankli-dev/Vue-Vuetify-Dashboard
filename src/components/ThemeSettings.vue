@@ -14,13 +14,24 @@
                 v-for="(option, index) in themeColorOptions"
                 :key="index"
               >
-                <input type="radio" name="color" :value="option.key" v-model="themeColor" />
+                <input
+                  type="radio"
+                  name="color"
+                  :value="option.key"
+                  v-model="themeColor"
+                />
                 <span class="color-option--item bg">
                   <span class="overlay">
                     <span class="material-icons">check</span>
                   </span>
-                  <span class="color-option--item--header sideNav" :class="option.value.sideNav"></span>
-                  <span class="color-option--item--header mainNav" :class="option.value.mainNav"></span>
+                  <span
+                    class="color-option--item--header sideNav"
+                    :class="option.value.sideNav"
+                  ></span>
+                  <span
+                    class="color-option--item--header mainNav"
+                    :class="option.value.mainNav"
+                  ></span>
                   <span class="sideMenu" :class="option.value.sideMenu"></span>
                 </span>
               </label>
@@ -42,14 +53,14 @@
   </div>
 </template>
 <script>
-import colors from "vuetify/es5/util/colors"
+import colors from "vuetify/es5/util/colors";
 export default {
   data() {
     return {
       themeColor: "indigo",
       sideBarOption: "light",
       colors: colors
-    }
+    };
   },
   computed: {
     themeColorOptions() {
@@ -126,24 +137,24 @@ export default {
             sideMenu: "white"
           }
         }
-      ]
+      ];
     }
   },
   watch: {
     themeColor: {
       handler(val) {
-        this.$vuetify.theme.primary = this.colors[val].base
+        this.$vuetify.theme.primary = this.colors[val].base;
       },
       immediate: true
     },
     sideBarOption: {
       handler(val) {
-        this.$vuetify.dark = val === "dark"
+        this.$vuetify.dark = val === "dark";
       },
       immediate: true
     }
   }
-}
+};
 </script>
 <style lang="stylus" scoped>
 .color-option {

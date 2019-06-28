@@ -15,7 +15,9 @@
         <div class="layout ma-0 align-center" :class="computeCardLayout">
           <v-avatar :size="computeAvatarSize" color="primary">
             <img :src="avatar.src" :alt="name" v-if="showAvatar" />
-            <span v-else class="white--text headline">{{ name.charAt(0) }}</span>
+            <span v-else class="white--text headline">{{
+              name.charAt(0)
+            }}</span>
           </v-avatar>
           <div class="flex" :class="computeTextAlgin">
             <div class="subheading">{{ name }}</div>
@@ -24,7 +26,12 @@
         </div>
       </v-card-text>
     </v-card>
-    <v-bottom-nav :value="true" color="transparent" :height="64" v-if="showBottomNav">
+    <v-bottom-nav
+      :value="true"
+      color="transparent"
+      :height="64"
+      v-if="showBottomNav"
+    >
       <v-btn flat color="teal" value="recent">
         <span>Recent</span>
         <v-icon>history</v-icon>
@@ -84,29 +91,29 @@ export default {
 
   computed: {
     computeCardLayout() {
-      return this.mini ? "row" : "column"
+      return this.mini ? "row" : "column";
     },
     computeTextAlgin() {
-      return this.mini ? "text-sm-right" : "text-sm-center"
+      return this.mini ? "text-sm-right" : "text-sm-center";
     },
     computeAvatarSize() {
-      return this.mini ? "48" : "96"
+      return this.mini ? "48" : "96";
     },
     showAvatar() {
-      return this.avatar !== null && this.avatar.src
+      return this.avatar !== null && this.avatar.src;
     },
 
     showBottomNav() {
-      return this.mini === false && this.bottomNav
+      return this.mini === false && this.bottomNav;
     },
 
     showTopNav() {
-      return this.mini === false && this.topNav
+      return this.mini === false && this.topNav;
     }
   },
 
   methods: {}
-}
+};
 </script>
 
 <style lang="stylus" scoped>

@@ -19,7 +19,7 @@ const getFileMenu = [
     title: "Document",
     to: { path: "/media", query: { type: "doc" } }
   }
-]
+];
 const Items = [
   {
     uuid: "a32c4aec-54de-4ff4-b165-8571ae805598",
@@ -48,7 +48,8 @@ const Items = [
     fileName: "google.png",
     fileType: "image/png",
     path: "static/avatar/google.png",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/avatar/google.png",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/avatar/google.png",
     ext: ".png",
     dir: "static/avatar",
     ctime: "2018-04-08T08:31:07.808Z",
@@ -59,7 +60,8 @@ const Items = [
     fileName: "hangouts.png",
     fileType: "image/png",
     path: "static/avatar/hangouts.png",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/avatar/hangouts.png",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/avatar/hangouts.png",
     ext: ".png",
     dir: "static/avatar",
     ctime: "2018-04-08T08:31:10.010Z",
@@ -70,7 +72,8 @@ const Items = [
     fileName: "inbox.png",
     fileType: "image/png",
     path: "static/avatar/inbox.png",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/avatar/inbox.png",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/avatar/inbox.png",
     ext: ".png",
     dir: "static/avatar",
     ctime: "2018-04-08T08:31:13.303Z",
@@ -81,7 +84,8 @@ const Items = [
     fileName: "keep.png",
     fileType: "image/png",
     path: "static/avatar/keep.png",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/avatar/keep.png",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/avatar/keep.png",
     ext: ".png",
     dir: "static/avatar",
     ctime: "2018-04-08T08:31:15.534Z",
@@ -92,7 +96,8 @@ const Items = [
     fileName: "messenger.png",
     fileType: "image/png",
     path: "static/avatar/messenger.png",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/avatar/messenger.png",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/avatar/messenger.png",
     ext: ".png",
     dir: "static/avatar",
     ctime: "2018-04-08T08:31:24.183Z",
@@ -543,7 +548,8 @@ const Items = [
     fileName: "403.svg",
     fileType: "image/svg+xml",
     path: "static/error/403.svg",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/error/403.svg",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/error/403.svg",
     ext: ".svg",
     dir: "static/error",
     ctime: "2018-03-30T06:10:45.825Z",
@@ -554,7 +560,8 @@ const Items = [
     fileName: "404.svg",
     fileType: "image/svg+xml",
     path: "static/error/404.svg",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/error/404.svg",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/error/404.svg",
     ext: ".svg",
     dir: "static/error",
     ctime: "2018-03-30T06:10:45.814Z",
@@ -565,7 +572,8 @@ const Items = [
     fileName: "500.svg",
     fileType: "image/svg+xml",
     path: "static/error/500.svg",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/error/500.svg",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/error/500.svg",
     ext: ".svg",
     dir: "static/error",
     ctime: "2018-03-30T06:10:45.818Z",
@@ -587,7 +595,8 @@ const Items = [
     fileName: "manifest.json",
     fileType: "application/json",
     path: "static/manifest.json",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/manifest.json",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/manifest.json",
     ext: ".json",
     dir: "static",
     ctime: "2018-03-14T09:21:32.018Z",
@@ -609,7 +618,8 @@ const Items = [
     fileName: "sitemap.xml",
     fileType: "application/xml",
     path: "static/sitemap.xml",
-    fullPath: "/Users/michael/themeforest/vue-material-admin/static/sitemap.xml",
+    fullPath:
+      "/Users/michael/themeforest/vue-material-admin/static/sitemap.xml",
     ext: ".xml",
     dir: "static",
     ctime: "2018-03-14T09:21:32.019Z",
@@ -637,10 +647,10 @@ const Items = [
     ctime: "2018-03-14T09:21:32.017Z",
     size: 538
   }
-]
+];
 
 const getFile = limit => {
-  return limit ? Items.slice(0, limit) : Items
-}
+  return limit ? Items.slice(0, limit) : Items;
+};
 
-export { getFileMenu, getFile }
+export { getFileMenu, getFile };

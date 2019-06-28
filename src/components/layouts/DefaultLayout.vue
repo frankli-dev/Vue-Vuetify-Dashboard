@@ -3,7 +3,12 @@
     <app-drawer class="app--drawer"></app-drawer>
     <app-toolbar class="app--toolbar"></app-toolbar>
     <v-content>
-      <h1 v-if="$vuetify.breakpoint.smAndUp && $route.meta.title" class="mt-3 ml-3">{{ $route.meta.title }}</h1>
+      <h1
+        v-if="$vuetify.breakpoint.smAndUp && $route.meta.title"
+        class="mt-3 ml-3"
+      >
+        {{ $route.meta.title }}
+      </h1>
       <router-view></router-view>
     </v-content>
     <!-- Go to top -->
@@ -12,9 +17,9 @@
 </template>
 
 <script>
-import AppDrawer from "@/components/AppDrawer"
-import AppToolbar from "@/components/AppToolbar"
-import AppFab from "@/components/AppFab"
+import AppDrawer from "@/components/AppDrawer";
+import AppToolbar from "@/components/AppToolbar";
+import AppFab from "@/components/AppFab";
 
 export default {
   components: {

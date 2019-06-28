@@ -20,5 +20,8 @@ Vue.prototype.$http.defaults.headers.common["Content-Type"] =
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    //ctm-api
+  }
 }).$mount("#app");

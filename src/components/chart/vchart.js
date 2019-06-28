@@ -1,9 +1,9 @@
-const G2 = window.G2
-import colors from "vuetify/es5/util/colors"
-const chartColors = []
+const G2 = window.G2;
+import colors from "vuetify/es5/util/colors";
+const chartColors = [];
 Object.entries(colors).forEach(item => {
-  chartColors.push(item[1].base)
-})
+  chartColors.push(item[1].base);
+});
 
 export default {
   name: "v-chart",
@@ -13,8 +13,8 @@ export default {
       staticClass: "v-chart",
       ref: "canvas",
       on: this.$listeners
-    }
-    return h("div", data)
+    };
+    return h("div", data);
   },
 
   props: {
@@ -31,23 +31,23 @@ export default {
         container: this.$refs.canvas,
         forceFit: true,
         height: window.innerWidth
-      })
+      });
     },
     resize() {
-      this.chartInstance.resize()
+      this.chartInstance.resize();
     },
     clean() {
-      window.removeEventListener("resize", this.chartInstance.resize)
-      this.chartInstance.dispose()
+      window.removeEventListener("resize", this.chartInstance.resize);
+      this.chartInstance.dispose();
     }
   },
   mounted() {
-    this.init()
+    this.init();
     window.addEventListener("resize", () => {
-      this.resize()
-    })
+      this.resize();
+    });
   },
   beforeDestroy() {
-    this.clean()
+    this.clean();
   }
-}
+};

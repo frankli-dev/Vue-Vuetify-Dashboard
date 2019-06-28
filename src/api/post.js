@@ -31,10 +31,10 @@ const posts = [
     author: "John Doe",
     createdAt: new Date().toLocaleDateString()
   }
-]
+];
 
 const getPost = limit => {
-  return limit ? posts.slice(0, limit) : posts
-}
+  return limit ? posts.slice(0, limit) : posts;
+};
 
-export { getPost }
+export { getPost };

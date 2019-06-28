@@ -55,7 +55,12 @@
         v-model="form.expireDate"
         required
       ></v-text-field>
-      <v-text-field label="CVV" v-model="form.cvv" mask="###" suffix="CVV"></v-text-field>
+      <v-text-field
+        label="CVV"
+        v-model="form.cvv"
+        mask="###"
+        suffix="CVV"
+      ></v-text-field>
     </div>
     <div class="d-flex">
       <v-switch label="Save My Card Detials" v-model="saveCard"></v-switch>
@@ -93,19 +98,19 @@ export default {
     }
   }),
   mounted() {
-    this.$validator.localize("en", this.dictionary)
+    this.$validator.localize("en", this.dictionary);
   },
 
   methods: {
     submit() {
-      this.$validator.validateAll()
+      this.$validator.validateAll();
     },
     clear() {
-      this.form = {}
-      this.$validator.reset()
+      this.form = {};
+      this.$validator.reset();
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

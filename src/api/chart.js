@@ -1,13 +1,27 @@
-const range = (start, end) => new Array(end - start).fill(start).map((el, i) => start + i)
+const range = (start, end) =>
+  new Array(end - start).fill(start).map((el, i) => start + i);
 
-const shortMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const shortMonth = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 const monthVisitData = shortMonth.map(m => {
   return {
     month: m,
     "Unique Visit": Math.floor(Math.random() * 1000) + 200,
     "Page View": Math.floor(Math.random() * 1000) + 250
-  }
-})
+  };
+});
 
 const campaignData = [
   {
@@ -30,7 +44,7 @@ const campaignData = [
     value: 1548,
     name: "Search"
   }
-]
+];
 const locationData = [
   {
     value: 50,
@@ -52,7 +66,7 @@ const locationData = [
     value: 10,
     name: "Other"
   }
-]
+];
 
 const StackMainData = [
   220,
@@ -75,19 +89,19 @@ const StackMainData = [
   123,
   125,
   220
-]
+];
 const StackData = StackMainData.map((item, key) => {
   return {
     label: key + "D",
     max: 500,
     sales: item
-  }
-})
+  };
+});
 const SinData = range(1, 12).map(i => {
   return {
     cate: "Cat" + i,
     value: (Math.sin(i / 5) * (i / 5 - 0.1) + i / 6) * 5
-  }
-})
+  };
+});
 
-export { monthVisitData, campaignData, locationData, StackData, SinData }
+export { monthVisitData, campaignData, locationData, StackData, SinData };

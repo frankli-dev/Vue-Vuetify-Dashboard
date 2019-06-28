@@ -5,11 +5,13 @@
         <div class="text-box">
           <div class="subheading pb-2">{{ title }}</div>
           <span class="grey--text"
-            >{{ subTitle }} <v-icon small :color="iconColor">{{ icon }}</v-icon></span
+            >{{ subTitle }}
+            <v-icon small :color="iconColor">{{ icon }}</v-icon></span
           >
         </div>
         <div class="chart">
-          <e-chart :path-option="computeChartOption" height="68px" width="100%"> </e-chart>
+          <e-chart :path-option="computeChartOption" height="68px" width="100%">
+          </e-chart>
         </div>
       </div>
     </v-card-text>
@@ -17,7 +19,7 @@
 </template>
 
 <script>
-import EChart from "@/components/chart/echart"
+import EChart from "@/components/chart/echart";
 export default {
   components: {
     EChart
@@ -60,7 +62,7 @@ export default {
         ["yAxis.show", false],
         ["color", [this.chartColor]]
       ]
-    }
+    };
   },
 
   watch: {
@@ -69,25 +71,25 @@ export default {
       handler: function(newVal) {
         switch (newVal) {
           case "bar":
-            this.defaultOption.push(["series[0].type", "bar"])
-            break
+            this.defaultOption.push(["series[0].type", "bar"]);
+            break;
           case "area":
-            this.defaultOption.push(["series[0].type", "line"])
-            this.defaultOption.push(["series[0].areaStyle", {}])
-            break
+            this.defaultOption.push(["series[0].type", "line"]);
+            this.defaultOption.push(["series[0].areaStyle", {}]);
+            break;
           default:
-            break
+            break;
         }
-        return this.defaultOption
+        return this.defaultOption;
       }
     }
   },
   computed: {
     computeChartOption() {
-      return this.defaultOption
+      return this.defaultOption;
     }
   }
-}
+};
 </script>
 
 <style></style>

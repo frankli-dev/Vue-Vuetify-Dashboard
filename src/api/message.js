@@ -2,7 +2,8 @@ export default [
   {
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
     title: "Brunch this weekend?",
-    subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood ?"
+    subtitle:
+      "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood ?"
   },
   { divider: true, inset: true },
   {
@@ -25,4 +26,4 @@ export default [
     subtitle:
       "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
   }
-]
+];

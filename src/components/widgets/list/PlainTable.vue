@@ -10,7 +10,12 @@
     <v-divider></v-divider>
     <v-card-text class="pa-0">
       <template>
-        <v-data-table :headers="headers" :items="projects" hide-actions class="elevation-0">
+        <v-data-table
+          :headers="headers"
+          :items="projects"
+          hide-actions
+          class="elevation-0"
+        >
           <template slot="items" slot-scope="props">
             <td>
               <v-avatar size="36px">
@@ -20,7 +25,11 @@
             <td>{{ props.item.name }}</td>
             <td class="text-xs-left">{{ props.item.deadline }}</td>
             <td class="text-xs-left">
-              <v-progress-linear :value="props.item.progress" height="5" :color="props.item.color"></v-progress-linear>
+              <v-progress-linear
+                :value="props.item.progress"
+                height="5"
+                :color="props.item.color"
+              ></v-progress-linear>
             </td>
             <td class="text-xs-right">
               <v-btn flat icon color="grey">
@@ -39,7 +48,7 @@
 </template>
 
 <script>
-import { Projects } from "@/api/project"
+import { Projects } from "@/api/project";
 export default {
   data() {
     return {
@@ -59,12 +68,12 @@ export default {
         { text: "Progress", value: "progress" },
         { text: "Action", value: "action", align: "right" }
       ]
-    }
+    };
   },
   computed: {
     projects() {
-      return Projects
+      return Projects;
     }
   }
-}
+};
 </script>

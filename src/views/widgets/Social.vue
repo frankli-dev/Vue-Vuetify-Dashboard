@@ -17,13 +17,23 @@
         <v-flex sm12>
           <h4>Basic Name Card with top nav</h4>
         </v-flex>
-        <v-flex lg3 sm12 v-for="(item, index) in users" :key="'basic-top-nav' + index">
+        <v-flex
+          lg3
+          sm12
+          v-for="(item, index) in users"
+          :key="'basic-top-nav' + index"
+        >
           <name-card top-nav v-bind="item"></name-card>
         </v-flex>
         <v-flex sm12>
           <h4>Bottom Nav Name Card</h4>
         </v-flex>
-        <v-flex lg3 sm12 v-for="(item, index) in users" :key="'bottom-nav' + index">
+        <v-flex
+          lg3
+          sm12
+          v-for="(item, index) in users"
+          :key="'bottom-nav' + index"
+        >
           <name-card bottom-nav v-bind="item"></name-card>
         </v-flex>
         <v-flex sm12>
@@ -38,8 +48,8 @@
 </template>
 
 <script>
-import NameCard from "@/components/widgets/card/NameCard"
-import ProfileCard from "@/components/widgets/card/ProfileCard"
+import NameCard from "@/components/widgets/card/NameCard";
+import ProfileCard from "@/components/widgets/card/ProfileCard";
 export default {
   components: {
     NameCard,
@@ -87,7 +97,7 @@ export default {
           }
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

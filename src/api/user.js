@@ -111,7 +111,8 @@ const Items = [
     email: "Pat_Zulauf81.Bartell86@gmail.com",
     username: "Pat_Zulauf81",
     phone: "(058) 200-7342",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rehatkathuria/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/rehatkathuria/128.jpg",
     address: {
       street: "62268 Favian Coves",
       suite: "Suite 993",
@@ -195,7 +196,8 @@ const Items = [
     email: "Jamey_Grant_Cruickshank73@gmail.com",
     username: "Jamey_Grant",
     phone: "545-939-2404 x32373",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/mikebeecham/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/mikebeecham/128.jpg",
     address: {
       street: "38372 Mante Glen",
       suite: "Suite 090",
@@ -279,7 +281,8 @@ const Items = [
     email: "Rollin43_Fay@yahoo.com",
     username: "Rollin43",
     phone: "477-651-5715 x502",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/horaciobella/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/horaciobella/128.jpg",
     address: {
       street: "5704 Spinka Causeway",
       suite: "Suite 388",
@@ -363,7 +366,8 @@ const Items = [
     email: "Santiago41_Crooks15@yahoo.com",
     username: "Santiago41",
     phone: "1-489-921-2159 x8655",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/ernestsemerda/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/ernestsemerda/128.jpg",
     address: {
       street: "7868 Windler Dam",
       suite: "Suite 876",
@@ -404,7 +408,8 @@ const Items = [
     email: "Lora_Kessler586@hotmail.com",
     username: "Lora_Kessler5",
     phone: "315-215-2852 x69280",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/antongenkin/128.jpg",
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/antongenkin/128.jpg",
     address: {
       street: "4018 Willms Turnpike",
       suite: "Suite 573",
@@ -418,14 +423,14 @@ const Items = [
       }
     }
   }
-]
+];
 
 const getUserById = uuid => {
-  return uuid === undefined ? Items[0] : Items.find(x => x.uuid === uuid)
-}
+  return uuid === undefined ? Items[0] : Items.find(x => x.uuid === uuid);
+};
 
 const getUser = limit => {
-  return limit ? Items.slice(0, limit) : Items
-}
+  return limit ? Items.slice(0, limit) : Items;
+};
 
-export { Items, getUser, getUserById }
+export { Items, getUser, getUserById };

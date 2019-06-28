@@ -15,7 +15,9 @@
         placeholder="Snowy Rock Pl"
         :rules="[
           () => !!address || 'This field is required',
-          () => (!!address && address.length <= 25) || 'Address must be less than 25 characters',
+          () =>
+            (!!address && address.length <= 25) ||
+            'Address must be less than 25 characters',
           addressCheck
         ]"
         v-model="address"
@@ -305,38 +307,39 @@ export default {
         state: this.state,
         zip: this.zip,
         country: this.country
-      }
+      };
     }
   },
 
   watch: {
     name() {
-      this.errorMessages = []
+      this.errorMessages = [];
     }
   },
 
   methods: {
     addressCheck() {
-      this.errorMessages = this.address && !this.name ? ["Hey! I'm required"] : []
+      this.errorMessages =
+        this.address && !this.name ? ["Hey! I'm required"] : [];
 
-      return true
+      return true;
     },
     resetForm() {
-      this.errorMessages = []
-      this.formHasErrors = false
+      this.errorMessages = [];
+      this.formHasErrors = false;
 
       Object.keys(this.form).forEach(f => {
-        this.$refs[f].reset()
-      })
+        this.$refs[f].reset();
+      });
     },
     submit() {
-      this.formHasErrors = false
+      this.formHasErrors = false;
       Object.keys(this.form).forEach(f => {
-        if (!this.form[f]) this.formHasErrors = true
+        if (!this.form[f]) this.formHasErrors = true;
 
-        this.$refs[f].validate(true)
-      })
+        this.$refs[f].validate(true);
+      });
     }
   }
-}
+};
 </script>

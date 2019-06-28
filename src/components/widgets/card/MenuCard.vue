@@ -9,13 +9,23 @@
       </v-btn>
     </v-toolbar>
     <v-list>
-      <v-list-group v-model="item.active" v-for="item in items" :key="item.title" :prepend-icon="item.action" no-action>
+      <v-list-group
+        v-model="item.active"
+        v-for="item in items"
+        :key="item.title"
+        :prepend-icon="item.action"
+        no-action
+      >
         <v-list-tile slot="activator">
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="subItem in item.items" :key="subItem.title" href="#">
+        <v-list-tile
+          v-for="subItem in item.items"
+          :key="subItem.title"
+          href="#"
+        >
           <v-list-tile-content>
             <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
           </v-list-tile-content>
@@ -42,7 +52,11 @@ export default {
           action: "restaurant",
           title: "Dining",
           active: true,
-          items: [{ title: "Breakfast & brunch" }, { title: "New American" }, { title: "Sushi" }]
+          items: [
+            { title: "Breakfast & brunch" },
+            { title: "New American" },
+            { title: "Sushi" }
+          ]
         },
         {
           action: "school",
@@ -70,7 +84,7 @@ export default {
           items: [{ title: "List Item" }]
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

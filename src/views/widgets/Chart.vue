@@ -38,7 +38,12 @@
                   </span>
                 </div>
                 <div class="chart">
-                  <v-progress-circular :size="60" :width="5" :rotate="360" :value="10" color="success"
+                  <v-progress-circular
+                    :size="60"
+                    :width="5"
+                    :rotate="360"
+                    :value="10"
+                    color="success"
                     >10</v-progress-circular
                   >
                 </div>
@@ -138,7 +143,12 @@
                 </div>
                 <v-spacer></v-spacer>
                 <div class>
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue"
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
                     >10</v-progress-circular
                   >
                 </div>
@@ -178,7 +188,12 @@
                 </div>
                 <v-spacer></v-spacer>
                 <div class>
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue"
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
                     >10</v-progress-circular
                   >
                 </div>
@@ -221,7 +236,12 @@
                 </div>
                 <v-spacer></v-spacer>
                 <div class>
-                  <v-progress-circular :size="100" :width="15" :rotate="360" :value="10" color="blue"
+                  <v-progress-circular
+                    :size="100"
+                    :width="15"
+                    :rotate="360"
+                    :value="10"
+                    color="blue"
                     >10</v-progress-circular
                   >
                 </div>
@@ -311,7 +331,10 @@
               <v-tab-item value="tab-2">
                 <v-card>
                   <e-chart
-                    :path-option="[['dataset.source', dataset.monthVisit], ['series[0].type', 'line']]"
+                    :path-option="[
+                      ['dataset.source', dataset.monthVisit],
+                      ['series[0].type', 'line']
+                    ]"
                     height="350px"
                     width="100%"
                   ></e-chart>
@@ -326,12 +349,18 @@
 </template>
 
 <script>
-import EChart from "@/components/chart/echart"
-import { StackData, SinData, monthVisitData, campaignData, locationData } from "@/api/chart"
-import Material from "vuetify/es5/util/colors"
-import MiniChart from "@/components/widgets/chart/MiniChart"
-import BoxChart from "@/components/widgets/chart/BoxChart"
-import VWidget from "@/components/VWidget"
+import EChart from "@/components/chart/echart";
+import {
+  StackData,
+  SinData,
+  monthVisitData,
+  campaignData,
+  locationData
+} from "@/api/chart";
+import Material from "vuetify/es5/util/colors";
+import MiniChart from "@/components/widgets/chart/MiniChart";
+import BoxChart from "@/components/widgets/chart/BoxChart";
+import VWidget from "@/components/VWidget";
 export default {
   components: {
     BoxChart,
@@ -351,16 +380,16 @@ export default {
         stackData: StackData
       },
       color: Material
-    }
+    };
   },
   created() {
-    console.log(this.$refs.chart)
+    console.log(this.$refs.chart);
   },
   methods: {
     handleTabChange() {
       // make sure the chart resized while parent from hidden to show
-      window.dispatchEvent(new Event("resize"))
+      window.dispatchEvent(new Event("resize"));
     }
   }
-}
+};
 </script>

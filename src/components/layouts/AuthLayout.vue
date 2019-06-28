@@ -17,7 +17,7 @@ export default {
   data: () => ({}),
 
   methods: {}
-}
+};
 </script>
 <style scoped lang="css">
 .split-bg {

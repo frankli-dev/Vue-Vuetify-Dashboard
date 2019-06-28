@@ -23,23 +23,23 @@
   </v-container>
 </template>
 <script>
-import ChatHistory from "@/components/chat/ChatHistory"
-import ChatWindow from "@/components/chat/ChatWindow"
+import ChatHistory from "@/components/chat/ChatHistory";
+import ChatWindow from "@/components/chat/ChatWindow";
 export default {
   components: {
     ChatHistory,
     ChatWindow
   },
   data() {
-    return {}
+    return {};
   },
   computed: {
     showSidebar() {
-      return this.$route.params.uuid === undefined
+      return this.$route.params.uuid === undefined;
     },
     showWindow() {
-      return this.$route.params.uuid !== undefined
+      return this.$route.params.uuid !== undefined;
     }
   }
-}
+};
 </script>

@@ -27,7 +27,11 @@
     <div class="layout row">
       <div class="media-aside media-menu">
         <v-list dense class="transparent">
-          <v-list-tile v-for="(item, index) in mediaMenu" :key="index" :to="item.to">
+          <v-list-tile
+            v-for="(item, index) in mediaMenu"
+            :key="index"
+            :to="item.to"
+          >
             <v-list-tile-action v-if="item.icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
@@ -78,23 +82,25 @@ export default {
   }),
   computed: {
     files() {
-      return this.$store.state.file.items
+      return this.$store.state.file.items;
     }
   },
 
   created() {
-    this.$store.dispatch("listFiles")
+    this.$store.dispatch("listFiles");
   },
 
   methods: {
     isImage(file) {
-      return this.imageMime.includes(file.fileType)
+      return this.imageMime.includes(file.fileType);
     },
     mimeIcons(file) {
-      return this.imageMime.includes(file.fileType) ? "image" : "insert_drive_file"
+      return this.imageMime.includes(file.fileType)
+        ? "image"
+        : "insert_drive_file";
     }
   }
-}
+};
 </script>
 <style lang="stylus" scoped>
 .media-menu {

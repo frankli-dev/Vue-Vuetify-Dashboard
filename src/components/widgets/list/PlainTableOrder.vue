@@ -10,15 +10,24 @@
     <v-divider></v-divider>
     <v-card-text class="pa-0">
       <template>
-        <v-data-table :headers="headers" :items="items" hide-actions class="elevation-0 table-striped">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          hide-actions
+          class="elevation-0 table-striped"
+        >
           <template slot="items" slot-scope="props">
             <td>{{ props.item.id }}</td>
             <td class="text-xs-left">{{ props.item.product }}</td>
             <td class="text-xs-left">{{ props.item.price }}</td>
             <td class="text-xs-left">
-              <v-chip label small :color="getColorByStatus(props.item.status)" text-color="white">{{
-                props.item.status
-              }}</v-chip>
+              <v-chip
+                label
+                small
+                :color="getColorByStatus(props.item.status)"
+                text-color="white"
+                >{{ props.item.status }}</v-chip
+              >
             </td>
           </template>
         </v-data-table>
@@ -29,7 +38,7 @@
 </template>
 
 <script>
-import items from "@/api/order"
+import items from "@/api/order";
 export default {
   data() {
     return {
@@ -50,18 +59,18 @@ export default {
         sent: "red",
         delivered: "green"
       }
-    }
+    };
   },
   computed: {
     randomColor() {
-      let item = Math.floor(Math.random() * this.colors.length)
-      return this.colors[item]
+      let item = Math.floor(Math.random() * this.colors.length);
+      return this.colors[item];
     }
   },
   methods: {
     getColorByStatus(status) {
-      return this.colors[status]
+      return this.colors[status];
     }
   }
-}
+};
 </script>

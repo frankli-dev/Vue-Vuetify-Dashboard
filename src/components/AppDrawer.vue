@@ -7,9 +7,12 @@
     width="300"
   >
     <v-toolbar color="primary darken-1" dark>
-      <img src="/img/logo.png" height="36" alt="CtM-Dashboard">
+      <img src="/img/logo.png" height="36" alt="CtM-Dashboard" />
     </v-toolbar>
-    <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
+    <vue-perfect-scrollbar
+      class="drawer-menu--scroll"
+      :settings="scrollSettings"
+    >
       <v-list dense expand>
         <template v-for="item in menus">
           <!--group with subitems-->
@@ -66,12 +69,16 @@
                   </v-list-tile-title>
                 </v-list-tile-content>
                 <v-list-tile-action v-if="subItem.action">
-                  <v-icon :class="[subItem.actionClass || 'success--text']">{{ subItem.action }}</v-icon>
+                  <v-icon :class="[subItem.actionClass || 'success--text']">{{
+                    subItem.action
+                  }}</v-icon>
                 </v-list-tile-action>
               </v-list-tile>
             </template>
           </v-list-group>
-          <v-subheader v-else-if="item.header" :key="item.name">{{ item.header }}</v-subheader>
+          <v-subheader v-else-if="item.header" :key="item.name">{{
+            item.header
+          }}</v-subheader>
           <v-divider v-else-if="item.divider" :key="item.name"></v-divider>
           <!--top-level link-->
           <v-list-tile

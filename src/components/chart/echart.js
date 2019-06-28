@@ -2,20 +2,20 @@
  * ECharts Vue Wrapper
  * Michael Wang
  */
-import colors from "vuetify/es5/util/colors"
-import _object from "lodash/object"
+import colors from "vuetify/es5/util/colors";
+import _object from "lodash/object";
 
-const ECharts = window.echarts || undefined
+const ECharts = window.echarts || undefined;
 if (ECharts === undefined) {
-  console.error("ECharts is not defined")
+  console.error("ECharts is not defined");
 }
 // set color palette
-const colorPalette = []
+const colorPalette = [];
 Object.entries(colors).forEach(item => {
   if (item[1].base) {
-    colorPalette.push(item[1].base)
+    colorPalette.push(item[1].base);
   }
-})
+});
 // default
 // const colorPalette = ['#d87c7c', '#919e8b', '#d7ab82', '#6e7074', '#61a0a8', '#efa18d', '#787464', '#cc7e63', '#724e58', '#4b565b'];
 // ECharts.registerTheme('material', {
@@ -27,25 +27,25 @@ Object.entries(colors).forEach(item => {
 
 //   }
 // });
-;(function() {
+(function() {
   const throttle = function(type, name, obj) {
-    obj = obj || window
-    let running = false
+    obj = obj || window;
+    let running = false;
     let func = function() {
       if (running) {
-        return
+        return;
       }
-      running = true
+      running = true;
       requestAnimationFrame(function() {
-        obj.dispatchEvent(new CustomEvent(name))
-        running = false
-      })
-    }
-    obj.addEventListener(type, func)
-  }
+        obj.dispatchEvent(new CustomEvent(name));
+        running = false;
+      });
+    };
+    obj.addEventListener(type, func);
+  };
   /* init - you can init any event */
-  throttle("resize", "optimizedResize")
-})()
+  throttle("resize", "optimizedResize");
+})();
 export default {
   name: "v-echart",
 
@@ -55,8 +55,8 @@ export default {
       style: this.canvasStyle,
       ref: "canvas",
       on: this.$listeners
-    }
-    return h("div", data)
+    };
+    return h("div", data);
   },
 
   props: {
@@ -83,7 +83,7 @@ export default {
     dataset: {
       type: [Object, Array],
       default() {
-        return {}
+        return {};
       }
     }, // option.dataSet
     colors: Array, // echarts.option.color
@@ -187,40 +187,42 @@ export default {
       return {
         width: this.width,
         height: this.height
-      }
+      };
     }
   },
   methods: {
     init() {
-      const { widthChangeDelay } = this
+      const { widthChangeDelay } = this;
       // set
       if (this.pathOption) {
         this.pathOption.forEach(p => {
-          _object.set(this.$data._defaultOption, p[0], p[1])
-        })
+          _object.set(this.$data._defaultOption, p[0], p[1]);
+        });
       }
-      this.chartInstance = ECharts.init(this.$refs.canvas, "material")
-      this.chartInstance.setOption(_object.merge(this.option, this.$data._defaultOption))
+      this.chartInstance = ECharts.init(this.$refs.canvas, "material");
+      this.chartInstance.setOption(
+        _object.merge(this.option, this.$data._defaultOption)
+      );
       window.addEventListener("optimizedResize", e => {
         setTimeout(_ => {
-          this.chartInstance.resize()
-        }, this.widthChangeDelay)
-      })
+          this.chartInstance.resize();
+        }, this.widthChangeDelay);
+      });
     },
 
     resize() {
-      this.chartInstance.resize()
+      this.chartInstance.resize();
     },
     clean() {
-      window.removeEventListener("resize", this.chartInstance.resize)
-      this.chartInstance.clear()
+      window.removeEventListener("resize", this.chartInstance.resize);
+      this.chartInstance.clear();
     }
   },
   mounted() {
-    this.init()
+    this.init();
   },
 
   beforeDestroy() {
-    this.clean()
+    this.clean();
   }
-}
+};

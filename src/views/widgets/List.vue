@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import { getPost } from "@/api/post"
-import MessageList from "@/components/widgets/list/MessageList"
-import NotificationList from "@/components/widgets/list/NotificationList"
-import PlainTable from "@/components/widgets/list/PlainTable"
-import PlainTableOrder from "@/components/widgets/list/PlainTableOrder"
-import PostListCard from "@/components/widgets/card/PostListCard"
+import { getPost } from "@/api/post";
+import MessageList from "@/components/widgets/list/MessageList";
+import NotificationList from "@/components/widgets/list/NotificationList";
+import PlainTable from "@/components/widgets/list/PlainTable";
+import PlainTableOrder from "@/components/widgets/list/PlainTableOrder";
+import PostListCard from "@/components/widgets/card/PostListCard";
 export default {
   components: {
     PostListCard,
@@ -38,17 +38,17 @@ export default {
     PlainTableOrder
   },
   data() {
-    return {}
+    return {};
   },
   computed: {
     posts() {
-      return getPost()
+      return getPost();
     }
   },
   methods: {
     handleClick: e => {
-      console.log(e)
+      console.log(e);
     }
   }
-}
+};
 </script>

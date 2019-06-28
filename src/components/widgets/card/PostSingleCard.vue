@@ -1,6 +1,10 @@
 <template>
   <v-card>
-    <v-responsive src="/static/nature/n3.jpeg" :height="imageHeight" class="white--text">
+    <v-responsive
+      src="/static/nature/n3.jpeg"
+      :height="imageHeight"
+      class="white--text"
+    >
       <v-layout row justify-space-between class="ma-0">
         <v-flex xs2>
           <v-icon color="white">favorite</v-icon>
@@ -45,7 +49,13 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-toolbar card color="white">
-      <v-text-field flat solo label="Comment here" append-icon="photo_camera" hide-details=""></v-text-field>
+      <v-text-field
+        flat
+        solo
+        label="Comment here"
+        append-icon="photo_camera"
+        hide-details=""
+      ></v-text-field>
     </v-toolbar>
   </v-card>
 </template>
@@ -72,7 +82,7 @@ export default {
       // implement your own method here
     }
   }
-}
+};
 </script>
 
 <style></style>

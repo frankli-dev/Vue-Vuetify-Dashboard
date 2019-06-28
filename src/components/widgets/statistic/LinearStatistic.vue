@@ -10,7 +10,11 @@
     </v-card-title>
     <v-card-text class="pt-2">
       <h3 class="headline">{{ subTitle }}</h3>
-      <v-progress-linear :value="value" height="5" :color="color"></v-progress-linear>
+      <v-progress-linear
+        :value="value"
+        height="5"
+        :color="color"
+      ></v-progress-linear>
       <span class="caption">{{ caption }}</span>
     </v-card-text>
   </v-card>
@@ -27,10 +31,10 @@ export default {
   },
   computed: {
     caption() {
-      return this.value + "% " + this.subTitle
+      return this.value + "% " + this.subTitle;
     }
   }
-}
+};
 </script>
 
 <style></style>

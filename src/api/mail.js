@@ -1,4 +1,4 @@
-import * as User from "./user"
+import * as User from "./user";
 
 const MailItem = [
   {
@@ -115,7 +115,8 @@ const MailItem = [
     uuid: "2d72dac8-42e8-4414-b14f-6b1680cbdcfb",
     type: "starred",
     tag: "Personal",
-    title: "Aut consequuntur molestiae labore velit nihil consectetur facere rerum et.",
+    title:
+      "Aut consequuntur molestiae labore velit nihil consectetur facere rerum et.",
     created_at: "2018-04-11T02:00:01.416Z",
     content:
       "Et temporibus alias et dolor. Expedita sapiente fuga ut consequuntur facilis omnis provident quia labore. Placeat omnis aperiam veritatis velit veritatis ut suscipit in. Blanditiis non praesentium sit rerum ullam. Voluptatem ex voluptates illo qui quaerat consequuntur distinctio.\n \rNesciunt ipsa iusto odit enim qui excepturi assumenda aut consectetur. Nisi deleniti eaque ratione illo ut ut. Recusandae consequatur harum. Voluptas dolor recusandae qui. Illum animi deserunt animi fugiat saepe et quia. Non id sapiente nihil earum.\n \rOfficiis eum ut similique reprehenderit ipsum. Id provident culpa harum ipsam in commodi. Voluptates assumenda harum aperiam aliquid assumenda. Ipsam aperiam unde molestiae earum dolores ullam aspernatur tempora officia. Porro dolores sit.\n \rAd et sed reiciendis illum quia ut qui. Velit sunt harum accusamus. Amet dolores reprehenderit vitae aut expedita nobis optio ad assumenda. Accusamus reprehenderit quaerat minima velit expedita eos animi autem occaecati. Quidem dolor eligendi nemo. Architecto harum sint fugit sit at dolorem reprehenderit vero quia.\n \rVoluptatum voluptate ad. Ipsa ut quos et sint et doloremque. A voluptas libero ipsum aut deleniti eaque facere nostrum sed. Nesciunt voluptas facere. Non et et ut.",
@@ -203,7 +204,8 @@ const MailItem = [
     uuid: "60c2248b-3cb2-4fdf-b157-770f07d2a1f3",
     type: "trashed",
     tag: "Work",
-    title: "Vel molestiae reprehenderit explicabo adipisci quia vitae cumque maxime.",
+    title:
+      "Vel molestiae reprehenderit explicabo adipisci quia vitae cumque maxime.",
     created_at: "2018-04-11T07:22:28.487Z",
     content:
       "Placeat eaque voluptatem voluptatum suscipit quod deleniti iusto. Officiis ut enim vel. Quibusdam nostrum et qui maxime tempore sed facilis non. Molestiae et provident. Non harum iste voluptatem architecto recusandae est. Quas et molestiae labore sequi et sit ad.\n \rPlaceat aut et impedit aut officia qui maxime et nobis. Aut reiciendis dolores nesciunt ratione tempora. Consequatur aut aliquam ut optio dicta rerum qui. Nisi ut et doloribus asperiores at. Ducimus asperiores quo ut.\n \rFugit ratione ipsa non fugiat enim sit velit omnis. Omnis unde molestias laboriosam aspernatur ullam labore quod. Et officiis sed beatae assumenda qui nostrum voluptates maiores similique. Corrupti laborum fugiat minima itaque et et dolor omnis soluta. Optio consectetur tempore id temporibus. Ullam magni ex quibusdam enim occaecati eveniet quia saepe.\n \rQuia quas harum delectus et voluptas. Aut consequatur fugit enim aliquid nobis excepturi. Dolores delectus delectus accusamus non veniam tempora excepturi iste doloremque. Id praesentium ea dolorem exercitationem aliquid.\n \rNecessitatibus vel in eligendi veniam sit. Quia et praesentium eius in. Autem magni ut. Ab repellat aut nobis voluptatibus aperiam quisquam expedita. Nam eius magni exercitationem consequatur provident voluptas sunt aut.",
@@ -221,14 +223,14 @@ const MailItem = [
     fromId: "28d9f265-74d7-4f85-83d4-6a21fca57dcf",
     attachments: []
   }
-]
+];
 
 // add user to mail
 MailItem.map(item => {
-  let users = User.getUser()
-  item.from = users.find(x => x.uuid === item.fromId)
-  return item
-})
+  let users = User.getUser();
+  item.from = users.find(x => x.uuid === item.fromId);
+  return item;
+});
 //
 
 const MailMenu = [
@@ -292,17 +294,17 @@ const MailMenu = [
     title: "Peronal",
     iconSize: "small"
   }
-]
+];
 
 const getMail = limit => {
-  return limit ? MailItem.slice(0, limit) : MailItem
-}
+  return limit ? MailItem.slice(0, limit) : MailItem;
+};
 
 const getMailById = uuid => {
-  return uuid === undefined ? MailItem[0] : MailItem.find(x => x.uuid === uuid)
-}
+  return uuid === undefined ? MailItem[0] : MailItem.find(x => x.uuid === uuid);
+};
 
 const getMailByType = type => {
-  return type === "all" ? MailItem : MailItem.filter(x => x.type === type)
-}
-export { getMail, MailMenu, getMailById, getMailByType }
+  return type === "all" ? MailItem : MailItem.filter(x => x.type === type);
+};
+export { getMail, MailMenu, getMailById, getMailByType };

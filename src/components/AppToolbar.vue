@@ -6,7 +6,9 @@
     <div
       v-if="$vuetify.breakpoint.xsOnly && $route.meta.title"
       class="title-mobile"
-    >{{ $route.meta.title }}</div>
+    >
+      {{ $route.meta.title }}
+    </div>
     <v-text-field
       v-else
       flat
@@ -33,10 +35,15 @@
         </v-btn>
         <notification-list></notification-list>
       </v-menu>
-      <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
+      <v-menu
+        offset-y
+        origin="center center"
+        :nudge-bottom="10"
+        transition="scale-transition"
+      >
         <v-btn icon large flat slot="activator">
           <v-avatar size="30px">
-            <img src="/static/avatar/man_4.jpg" alt="Michael Wang">
+            <img src="/static/avatar/man_4.jpg" alt="Michael Wang" />
           </v-avatar>
         </v-btn>
         <v-list class="pa-0">

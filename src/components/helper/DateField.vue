@@ -23,7 +23,9 @@
     <v-date-picker v-model="date" no-title scrollable>
       <v-spacer></v-spacer>
       <v-btn flat @click="showCalendar = false">Cancel</v-btn>
-      <v-btn depressed color="primary" @click="$refs.showCalendar.save(date)">Apply</v-btn>
+      <v-btn depressed color="primary" @click="$refs.showCalendar.save(date)"
+        >Apply</v-btn
+      >
     </v-date-picker>
   </v-menu>
 </template>
@@ -42,7 +44,7 @@ export default {
     return {
       showCalendar: false,
       date: null
-    }
+    };
   }
-}
+};
 </script>

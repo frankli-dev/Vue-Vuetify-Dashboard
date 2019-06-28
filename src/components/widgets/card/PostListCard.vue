@@ -13,7 +13,12 @@
         <li class="post--item" v-for="(item, key) in items" :key="key">
           <a href="#" class=" post--link pa-4 layout row ma-0 text--primary">
             <div class="post--media">
-              <img :src="item.featuredImage" alt="" height="100" class="image-scale" />
+              <img
+                :src="item.featuredImage"
+                alt=""
+                height="100"
+                class="image-scale"
+              />
             </div>
             <div class="post--content ml-3">
               <h3 class="title post--title">
@@ -32,7 +37,10 @@
                     <v-icon small>thumb_up</v-icon>
                     <small>100+</small>
                   </a>
-                  <a @click="handleComment" class="grey--text text--darken-1 mx-3">
+                  <a
+                    @click="handleComment"
+                    class="grey--text text--darken-1 mx-3"
+                  >
                     <v-icon small>mode_comment</v-icon>
                     <small>12+</small>
                   </a>
@@ -67,7 +75,7 @@ export default {
       // implement your own method here
     }
   }
-}
+};
 </script>
 
 <style scoped>

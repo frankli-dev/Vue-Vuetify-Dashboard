@@ -955,4 +955,4 @@ export default [
     country: "Zimbabwe",
     abbr: "ZW"
   }
-]
+];

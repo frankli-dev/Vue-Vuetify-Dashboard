@@ -1,7 +1,9 @@
 <template>
   <v-container fluid>
     <v-stepper v-model="e6" vertical class="daily-data">
-      <v-stepper-step :complete="e6 > 1" step="1">Make your selection and enter your data below:</v-stepper-step>
+      <v-stepper-step :complete="e6 > 1" step="1"
+        >Make your selection and enter your data below:</v-stepper-step
+      >
       <v-stepper-content step="1">
         <v-layout align-center>
           <v-flex xs12 sm6 md4 lg3>Your gender:</v-flex>
@@ -12,16 +14,14 @@
         <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
       </v-stepper-content>
 
-      <v-stepper-step :complete="e6 > 2" step="2">Track in kilograms (kg) of pounts</v-stepper-step>
+      <v-stepper-step :complete="e6 > 2" step="2"
+        >Track in kilograms (kg) of pounts</v-stepper-step
+      >
       <v-stepper-content step="2">
         <v-layout wrap align-center>
-          <v-flex
-            xs12
-            sm6
-            md4
-            lg3
-            v-if="$vuetify.breakpoint.smAndUp"
-          >Track in kilograms (kg) of pounts:</v-flex>
+          <v-flex xs12 sm6 md4 lg3 v-if="$vuetify.breakpoint.smAndUp"
+            >Track in kilograms (kg) of pounts:</v-flex
+          >
           <v-flex xs12 sm6 md4 lg3>
             <v-select :items="track" value="Select"></v-select>
           </v-flex>
@@ -30,24 +30,34 @@
         <v-btn flat @click="e6 = 1">Back</v-btn>
       </v-stepper-content>
 
-      <v-stepper-step :complete="e6 > 3" step="3">Select last measurement / weigth date</v-stepper-step>
+      <v-stepper-step :complete="e6 > 3" step="3"
+        >Select last measurement / weigth date</v-stepper-step
+      >
       <v-stepper-content step="3">
         <v-layout wrap align-center>
-          <v-flex
-            xs12
-            sm6
-            md5
-            lg4
-            v-if="$vuetify.breakpoint.smAndUp"
-          >Select last measurement / weigth date</v-flex>
+          <v-flex xs12 sm6 md5 lg4 v-if="$vuetify.breakpoint.smAndUp"
+            >Select last measurement / weigth date</v-flex
+          >
           <v-flex xs12 sm6 md7 lg8>
             <div v-if="$vuetify.breakpoint.xsOnly">
-              <date-field/>
+              <date-field />
             </div>
             <div v-else>
-              <v-select :items="day" value="Day" class="daily-data__short-selector"></v-select>
-              <v-select :items="month" value="Month" class="daily-data__short-selector"></v-select>
-              <v-select :items="year" value="Year" class="daily-data__short-selector"></v-select>
+              <v-select
+                :items="day"
+                value="Day"
+                class="daily-data__short-selector"
+              ></v-select>
+              <v-select
+                :items="month"
+                value="Month"
+                class="daily-data__short-selector"
+              ></v-select>
+              <v-select
+                :items="year"
+                value="Year"
+                class="daily-data__short-selector"
+              ></v-select>
             </div>
           </v-flex>
         </v-layout>
@@ -55,7 +65,9 @@
         <v-btn flat @click="e6 = 2">Back</v-btn>
       </v-stepper-content>
 
-      <v-stepper-step :complete="e6 > 4" step="4">Select last measurement / weigth date</v-stepper-step>
+      <v-stepper-step :complete="e6 > 4" step="4"
+        >Select last measurement / weigth date</v-stepper-step
+      >
       <v-stepper-content step="4">
         <table class="daily-data__table">
           <tr>
@@ -65,7 +77,7 @@
           </tr>
           <tr>
             <td>
-              <date-field/>
+              <date-field />
             </td>
             <td>
               <v-text-field label="Enter number" type="number"></v-text-field>

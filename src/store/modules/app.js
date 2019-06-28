@@ -6,7 +6,8 @@ const state = {
   showDrawer: true,
   status: "",
   token: localStorage.getItem("token") || "",
-  user: {}
+  user: {},
+  offer: []
 };
 
 // getters
@@ -41,8 +42,27 @@ const actions = {
         });
     });
   },
-  logout({ commit }) {
+  sendoffer({ commit }, offerBinding) {
+    console.log(offerBinding);
     return new Promise((resolve, reject) => {
+      commit("auth_request");
+      axios({
+        url: "https://ctm-api-dev.azurewebsites.net/api/offers/target",
+        method: "post",
+        data: qs.stringify(offerBinding)
+      })
+        .then(resp => {
+          commit("send_offer", offerBinding);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("send_offer_failed");
+          reject(err);
+        });
+    });
+  },
+  logout({ commit }) {
+    return new Promise(resolve => {
       commit("logout");
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
@@ -63,6 +83,13 @@ const mutations = {
   },
   auth_error(state) {
     state.status = "error";
+  },
+  send_offer(state, offerBinding) {
+    state.status = "sending_offer";
+    state.offer = offerBinding;
+  },
+  send_offer_failed(state) {
+    state.status = "sending_offer_failed";
   },
   logout(state) {
     state.status = "";

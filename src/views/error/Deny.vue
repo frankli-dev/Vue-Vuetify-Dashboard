@@ -21,13 +21,13 @@
 export default {
   methods: {
     goHome() {
-      this.$router.push({ path: "/" })
+      this.$router.push({ path: "/" });
     }
   },
   created() {
-    console.log("here")
+    console.log("here");
   }
-}
+};
 </script>
 <style scoped lang="css">
 h1 {

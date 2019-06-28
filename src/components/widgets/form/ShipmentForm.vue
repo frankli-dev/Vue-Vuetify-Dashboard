@@ -68,7 +68,11 @@
       item-text="name"
       item-value="id"
     ></v-select>
-    <v-text-field label="Zip Code" v-model="formModel.zipcode" required></v-text-field>
+    <v-text-field
+      label="Zip Code"
+      v-model="formModel.zipcode"
+      required
+    ></v-text-field>
     <v-text-field
       label="Address"
       v-validate="'required'"
@@ -85,7 +89,7 @@
 </template>
 
 <script>
-import Countries from "@/api/country"
+import Countries from "@/api/country";
 export default {
   $_veeValidate: {
     validator: "new"
@@ -109,16 +113,16 @@ export default {
     valid: true
   }),
   mounted() {
-    this.$validator.localize("en", this.dictionary)
+    this.$validator.localize("en", this.dictionary);
   },
   methods: {
     submit() {
-      this.$validator.validateAll()
+      this.$validator.validateAll();
     },
     clear() {
-      this.formModel = {}
-      this.$validator.reset()
+      this.formModel = {};
+      this.$validator.reset();
     }
   }
-}
+};
 </script>
