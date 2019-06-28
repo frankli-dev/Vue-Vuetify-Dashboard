@@ -22,7 +22,7 @@
         <v-stepper-content step="1">
           <v-form ref="form1">
             <v-card class="mb-5">
-              <v-flex xs6 sm6 md6>
+              <v-flex xs6 sm12 md6>
                 <v-select
                   v-model="targetInterests"
                   :items="ctmMatrix"
@@ -34,39 +34,28 @@
                   :rules="itemCount"
                 ></v-select>
               </v-flex>
-              <v-flex xs3 sm3 md3>
-                <v-text-field
-                  label="Interest is > than"
-                  :counter="10"
-                  v-model="interest"
-                  v-validate="required"
-                  :rules="inputRules"
-                  @input="$v.interest.$touch()"
-                  @blur="$v.interest.$touch()"
-                ></v-text-field>
+              <v-flex xs3 sm12 md3>
+                Interest is > than
+                <v-slider v-model="slider" thumb-label></v-slider>
               </v-flex>
-              <v-flex xs6 sm6 md6>
-                <v-select
-                  v-model="targetFuelType"
-                  :items="fuelType"
-                  box
-                  chips
-                  label="Fuel Preference"
-                  multiple
-                  v-validate="required"
-                  :rules="itemCount"
-                ></v-select>
-                <v-select
-                  v-model="targetFuelBrand"
-                  :items="fuelBrand"
-                  box
-                  chips
-                  label="Fuel Brand"
-                  multiple
-                  v-validate="required"
-                  :rules="itemCount"
-                ></v-select>
-              </v-flex>
+              <v-layout style="line-height:65px">
+                Premium  
+              <v-switch
+                v-model="ex11"
+                hide-details
+                style="max-width:40px"
+              ></v-switch>
+              Standard
+              </v-layout>
+              <v-layout style="line-height:65px">
+                Fuel  
+              <v-switch
+                v-model="ex11"
+                hide-details
+                style="max-width:40px"
+              ></v-switch>
+              Brand
+              </v-layout>
             </v-card>
 
             <v-btn color="primary" @click="targetNext">Continue</v-btn>
@@ -77,6 +66,18 @@
 
         <v-stepper-content step="2">
           <v-form ref="form2">
+            <v-flex xs6 sm12 md6>
+                <v-select
+                  v-model="targetInterests"
+                  :items="ctmMatrix"
+                  box
+                  chips
+                  label="Type"
+                  multiple
+                  v-validate="required"
+                  :rules="itemCount"
+                ></v-select>
+              </v-flex>
             <v-expansion-panel>
               <v-expansion-panel-content>
                 <template v-slot:header>
@@ -150,6 +151,32 @@
                     :error-messages="custTitleErrors"
                     :counter="150"
                     label="Customer Facing Title"
+                    required
+                    :rules="inputRules"
+                    @input="$v.custTitle.$touch()"
+                    @blur="$v.custTitle.$touch()"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12 sm4>
+                  <v-text-field
+                    v-model="name"
+                    :error-messages="nameErrors"
+                    :counter="50"
+                    label="Description"
+                    required
+                    :rules="inputRules"
+                    @input="$v.name.$touch()"
+                    @blur="$v.name.$touch()"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm8>
+                  <v-text-field
+                    v-model="custTitle"
+                    :error-messages="custTitleErrors"
+                    :counter="150"
+                    label="URL"
                     required
                     :rules="inputRules"
                     @input="$v.custTitle.$touch()"
