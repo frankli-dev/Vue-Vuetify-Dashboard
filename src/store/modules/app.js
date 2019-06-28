@@ -45,14 +45,14 @@ const actions = {
   sendoffer({ commit }, offerBinding) {
     console.log(offerBinding);
     return new Promise((resolve, reject) => {
-      commit("auth_request");
+      commit("offer_request");
       axios({
         url: "https://ctm-api-dev.azurewebsites.net/api/offers/target",
         method: "post",
         data: qs.stringify(offerBinding)
       })
         .then(resp => {
-          commit("send_offer", offerBinding);
+          commit("send_offer_success", offerBinding);
           resolve(resp);
         })
         .catch(err => {
@@ -84,8 +84,11 @@ const mutations = {
   auth_error(state) {
     state.status = "error";
   },
-  send_offer(state, offerBinding) {
+  offer_request(state) {
     state.status = "sending_offer";
+  },
+  send_offer_success(state, offerBinding) {
+    state.status = "sending_offer_success";
     state.offer = offerBinding;
   },
   send_offer_failed(state) {
