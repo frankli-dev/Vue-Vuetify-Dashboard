@@ -1,17 +1,22 @@
 const Menu = [
   {
+    title: "Dashboard",
+    icon: "dashboard",
+    name: "Dashboard"
+  },
+  {
     title: "Users",
-    icon: "assignment_ind",
+    icon: "supervisor_account",
     name: "Users"
   },
   {
     title: "Deals",
-    icon: "assignment",
+    icon: "description",
     name: "Deals"
   },
   {
     title: "Solutions",
-    icon: "assignment_turned_in",
+    icon: "thumb_up",
     name: "Solutions"
   }
 ];

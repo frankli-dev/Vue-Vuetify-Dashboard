@@ -52,12 +52,11 @@ export const protectedRoute = [
         name: "Users",
         meta: {
           title: "Users",
-          group: "apps",
-          icon: "assignment_ind",
+          icon: "supervisor_account",
           requiresAuth: true
         },
         component: () =>
-          import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard.vue")
+          import(/* webpackChunkName: "dashboard" */ "@/views/Users.vue")
       },
 
       {
@@ -69,11 +68,24 @@ export const protectedRoute = [
       },
 
       {
+        path: "/",
+        name: "Dashboard",
+        component: () =>
+          import(/* webpackChunkName: "routes" */ `@/views/Dashboard.vue`),
+        meta: { title: "Dashboard", icon: "dashboard", requiresAuth: true }
+      },
+      {
         path: "/deals",
         name: "Deals",
         component: () =>
+          import(/* webpackChunkName: "routes" */ `@/views/DealView.vue`),
+        meta: { title: "Deals", icon: "description", requiresAuth: true }
+      },
+      {
+        path: "/deals/add",
+        component: () =>
           import(/* webpackChunkName: "routes" */ `@/views/Deals.vue`),
-        meta: { title: "Deals", icon: "assignment", requiresAuth: true }
+        meta: { title: "Add a Deal", requiresAuth: true }
       },
       {
         path: "/solutions",
@@ -82,7 +94,7 @@ export const protectedRoute = [
           import(/* webpackChunkName: "routes" */ `@/views/DailyData.vue`),
         meta: {
           title: "Solutions",
-          icon: "assignment_turned_in",
+          icon: "thumb_up",
           requiresAuth: true
         }
       }

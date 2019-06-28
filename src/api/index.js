@@ -8,6 +8,7 @@ import * as Mail from "./mail";
 import * as Post from "./post";
 import * as Chart from "./chart";
 import * as Project from "./project";
+
 export default {
   // user
   getUser: User.getUser,

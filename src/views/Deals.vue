@@ -71,7 +71,7 @@
 
             <v-btn color="primary" @click="targetNext">Continue</v-btn>
 
-            <v-btn flat>Cancel</v-btn>
+            <v-btn flat to="/deals">Cancel</v-btn>
           </v-form>
         </v-stepper-content>
 
@@ -123,7 +123,7 @@
             <!-- -->
             <v-btn color="primary" @click="zoneNext">Continue</v-btn>
 
-            <v-btn flat>Cancel</v-btn>
+            <v-btn flat to="/deals">Cancel</v-btn>
           </v-form>
         </v-stepper-content>
 
@@ -383,7 +383,6 @@ export default {
             sendNotification: new Date(),
             message: "string"
           }};
-          console.log(data);
       this.$store
         .dispatch("app/sendoffer", {
           data
