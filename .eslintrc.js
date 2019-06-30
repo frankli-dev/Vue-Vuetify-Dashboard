@@ -6,13 +6,13 @@ module.exports = {
   },
 
   extends: [
-    "plugin:vue/strongly-recommended",
-    "@vue/prettier"
+    // "plugin:vue/strongly-recommended",
+    // "@vue/prettier"
   ],
 
   rules: {
-    'no-console': 'off',
-    'no-debugger': 'off'
+    // 'no-console': 'off',
+    // 'no-debugger': 'off'
   },
 
   parserOptions: {

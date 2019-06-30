@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.fae47cf88151d5c5982229d6b22a45fc.js"
+  "/precache-manifest.e696dd5247e941df119bc6601bf0a023.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "NuStrength"});
