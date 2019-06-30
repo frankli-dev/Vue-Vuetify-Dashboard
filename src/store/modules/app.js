@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "qs";
+import * as AzureStorage from "azure-storage"
 // import { setTimeout } from "timers";
 const CONNECTION_STRING =
   "DefaultEndpointsProtocol=https;AccountName=ctmdevblobstore;AccountKey=kOsp2TN8aBUkPnweW6nnVAUTP78NB+oAY5SPeSXlA/ZnmmOrGOpEHoeSSlbZJy4ZI8z8b5YYj5JFhenp6Wz+zw==;EndpointSuffix=core.windows.net";
