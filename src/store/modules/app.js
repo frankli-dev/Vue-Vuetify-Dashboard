@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "qs";
-// import * as AzureStorage from "azure-storage"
 // import { setTimeout } from "timers";
 // const CONNECTION_STRING =
 //   "DefaultEndpointsProtocol=https;AccountName=ctmdevblobstore;AccountKey=kOsp2TN8aBUkPnweW6nnVAUTP78NB+oAY5SPeSXlA/ZnmmOrGOpEHoeSSlbZJy4ZI8z8b5YYj5JFhenp6Wz+zw==;EndpointSuffix=core.windows.net";
@@ -52,25 +51,38 @@ const actions = {
   },
   upload_image({ commit }, image) {
     console.log(image);
-    commit("upload_image_request");
-    // return new Promise((resolve, reject) => {
-    //   commit("upload_image_request");
-    //   // let blobUri = 'https://' + BlobName + '.blob.core.windows.net';
-    //   // let blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, 'sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-08-31T07:59:25Z&st=2019-06-27T23:59:25Z&spr=https&sig=XlOMbfvTtajJ5P7hJt9425vLOaDefMAbYfOl%2F4Z5lcc%3D');
-    //   // blobService.createBlockBlobFromBrowserFile(BlockBlobContainerName, 
-    //   //   image.name, 
-    //   //   image, 
-    //   //   (error, result) => {
-    //   //       if(error) {
-    //   //           // Handle blob error
-    //   //           commit("upload_image_failure");
-    //   //           console.log(error);
-    //   //       } else {
-    //   //         commit("upload_image_success", image);
-    //   //         console.log('Upload is successful');
-    //   //       }
-    //   //   });
-    // });
+    return new Promise((resolve, reject) => {
+      commit("upload_image_request");
+      axios({
+        url: "https://ctm-api-dev.azurewebsites.net/api/offers/target",
+        method: "post",
+        data: qs.stringify(image)
+      })
+        .then(resp => {
+          commit("send_offer_success", image);
+          console.log(resp);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("send_offer_failed");
+          reject(err);
+        });
+      // let blobUri = 'https://' + BlobName + '.blob.core.windows.net';
+      // let blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, 'sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-08-31T07:59:25Z&st=2019-06-27T23:59:25Z&spr=https&sig=XlOMbfvTtajJ5P7hJt9425vLOaDefMAbYfOl%2F4Z5lcc%3D');
+      // blobService.createBlockBlobFromBrowserFile(BlockBlobContainerName, 
+      //   image.name, 
+      //   image, 
+      //   (error, result) => {
+      //       if(error) {
+      //           // Handle blob error
+      //           commit("upload_image_failure");
+      //           console.log(error);
+      //       } else {
+      //         commit("upload_image_success", image);
+      //         console.log('Upload is successful');
+      //       }
+      //   });
+    });
   },
   sendoffer({ commit }, offerBinding) {
     //console.log(offerBinding);
