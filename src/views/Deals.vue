@@ -1,4 +1,3 @@
-
 <template>
   <v-container fluid>
     <v-stepper v-model="e1">
@@ -23,22 +22,35 @@
         <v-stepper-content step="1">
           <v-form ref="form1">
             <v-card class="mb-5">
-              <v-flex xs6 sm12 md6>
-                <v-select
+              <v-flex xs12 sm12 md12>
+                <v-combobox
                   v-model="targetInterests"
                   :items="ctmMatrix"
-                  box
-                  chips
                   label="Interest Category"
+                  chips
+                  clearable
+                  solo
                   multiple
                   v-validate="required"
                   :rules="itemCount"
-                ></v-select>
+                >
+                  <template v-slot:selection="data">
+                    <v-chip
+                      :selected="data.selected"
+                      close
+                      @input="remove(data.item)"
+                    >
+                      <strong>{{ data.item }}</strong>&nbsp;
+                      <span>(interest)</span>
+                    </v-chip>
+                  </template>
+                </v-combobox>
               </v-flex>
-              <v-flex xs3 sm12 md3>
+              <v-flex xs12 sm12 md12>
                 Interest is > than
                 <v-slider v-model="interest" thumb-label></v-slider>
               </v-flex>
+              <v-flex xs12 sm12 md12>
               <v-layout style="line-height:65px">
                 Premium  
               <v-switch
@@ -47,9 +59,8 @@
                 style="max-width:40px"
               ></v-switch>
               Standard
-              </v-layout>
-              <v-layout style="line-height:65px">
-                Fuel  
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           
+              Fuel  
               <v-switch
                 v-model="brand"
                 hide-details
@@ -57,6 +68,7 @@
               ></v-switch>
               Brand
               </v-layout>
+              </v-flex>
             </v-card>
 
             <v-btn color="primary" @click="targetNext">Continue</v-btn>
@@ -79,7 +91,7 @@
                   :rules="itemCount"
                 ></v-select>
               </v-flex>
-            <v-expansion-panel>
+            <v-expansion-panel v-model="panel">
               <v-expansion-panel-content>
                 <template v-slot:header>
                   <div>Post Code</div>
@@ -103,18 +115,18 @@
                 </template>
                 <v-card>
                   <v-autocomplete
-                    ref="location"
                     v-model="curLocation"
-                    :loading="loading"
                     :items="items"
+                    :loading="isLoading"
                     :search-input.sync="search"
-                    cache-items
-                    class="mx-3"
-                    flat
-                    hide-details
-                    label="Location"
-                    v-validate="required"
-                    error-message="Select Location"
+                    color="white"
+                    hide-no-data
+                    hide-selected
+                    item-text="Description"
+                    item-value="API"
+                    label="Input your location"
+                    placeholder="Location"
+                    return-object
                   ></v-autocomplete>
 
                   <v-subheader class="pl-0">Radius</v-subheader>
@@ -338,6 +350,10 @@ export default {
       interest: 20,
       radius: 15,
 
+      panel: [true, true],
+
+      isLoading: false,
+
       custTitle: "Custome Title",
       ctmMatrix: ["car", "health", "home", "foo", "bar", "fizz", "buzz"],
       targetInterests: ["car", "health", "home", "foo"],
@@ -381,11 +397,32 @@ export default {
     };
   },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
+    search (val) {
+      // Items have already been loaded
+      if (this.items.length > 0) return
+
+      // Items have already been requested
+      if (this.isLoading) return
+
+      this.isLoading = true
+
+      // Lazily load input items
+      fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=paris&key=AIzaSyCpJOWuQiXHTAnmdxgqjPRCwOKkTllFtsg')
+        .then(res => res.json())
+        .then(res => {
+          console.log(res.predictions)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(() => (this.isLoading = false))
     }
   },
   methods: {
+    remove (item) {
+        this.targetInterests.splice(this.targetInterests.indexOf(item), 1)
+        this.targetInterests = [...this.targetInterests]
+      },
     sendData() {
       this.loading = true;
       let files = this.$refs.dropzone.getFiles();
