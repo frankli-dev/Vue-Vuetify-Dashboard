@@ -88,12 +88,12 @@ export default {
     }, // option.dataSet
     colors: Array, // echarts.option.color
     backgroundColor: [Object, String],
-    toolbox: { type: [Object, Array] },
+    toolbox: { type: [Object, Array] }
     // resize delay
-    widthChangeDelay: {
-      type: Number,
-      default: 450
-    }
+    // widthChangeDelay: {
+    //   type: Number,
+    //   default: 450
+    // }
   },
   data: () => ({
     chartInstance: null,
@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     init() {
-      const { widthChangeDelay } = this;
+      // const { widthChangeDelay } = this;
       // set
       if (this.pathOption) {
         this.pathOption.forEach(p => {
@@ -205,6 +205,7 @@ export default {
       );
       window.addEventListener("optimizedResize", e => {
         setTimeout(_ => {
+          console.log(e, _);
           this.chartInstance.resize();
         }, this.widthChangeDelay);
       });

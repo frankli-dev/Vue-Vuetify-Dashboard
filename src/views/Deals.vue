@@ -1,3 +1,4 @@
+
 <template>
   <v-container fluid>
     <v-stepper v-model="e1">
@@ -36,12 +37,12 @@
               </v-flex>
               <v-flex xs3 sm12 md3>
                 Interest is > than
-                <v-slider v-model="slider" thumb-label></v-slider>
+                <v-slider v-model="interest" thumb-label></v-slider>
               </v-flex>
               <v-layout style="line-height:65px">
                 Premium  
               <v-switch
-                v-model="ex11"
+                v-model="premium"
                 hide-details
                 style="max-width:40px"
               ></v-switch>
@@ -50,7 +51,7 @@
               <v-layout style="line-height:65px">
                 Fuel  
               <v-switch
-                v-model="ex11"
+                v-model="brand"
                 hide-details
                 style="max-width:40px"
               ></v-switch>
@@ -103,7 +104,7 @@
                 <v-card>
                   <v-autocomplete
                     ref="location"
-                    v-model="select"
+                    v-model="curLocation"
                     :loading="loading"
                     :items="items"
                     :search-input.sync="search"
@@ -117,7 +118,7 @@
                   ></v-autocomplete>
 
                   <v-subheader class="pl-0">Radius</v-subheader>
-                  <v-slider v-model="slider" thumb-label></v-slider>
+                  <v-slider v-model="radius" thumb-label></v-slider>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -130,25 +131,23 @@
 
         <v-stepper-content step="3">
           <v-form ref="form3">
-            <DropzoneComp ref="dropzone" v-model="imageUrl"/>
+            <DropzoneComp ref="dropzone"/>
             <v-container>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
                   <v-text-field
-                    v-model="name"
-                    :error-messages="nameErrors"
+                    v-model="internalcode"
                     :counter="50"
                     label="Internal Code/Title"
                     required
                     :rules="inputRules"
-                    @input="$v.name.$touch()"
-                    @blur="$v.name.$touch()"
+                    @input="$v.internalcode.$touch()"
+                    @blur="$v.internalcode.$touch()"
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm8>
                   <v-text-field
                     v-model="custTitle"
-                    :error-messages="custTitleErrors"
                     :counter="150"
                     label="Customer Facing Title"
                     required
@@ -161,26 +160,24 @@
               <v-layout row wrap>
                 <v-flex xs12 sm4>
                   <v-text-field
-                    v-model="name"
-                    :error-messages="nameErrors"
+                    v-model="description"
                     :counter="50"
                     label="Description"
                     required
                     :rules="inputRules"
-                    @input="$v.name.$touch()"
-                    @blur="$v.name.$touch()"
+                    @input="$v.description.$touch()"
+                    @blur="$v.description.$touch()"
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm8>
                   <v-text-field
-                    v-model="custTitle"
-                    :error-messages="custTitleErrors"
+                    v-model="URL"
                     :counter="150"
                     label="URL"
                     required
                     :rules="inputRules"
-                    @input="$v.custTitle.$touch()"
-                    @blur="$v.custTitle.$touch()"
+                    @input="$v.URL.$touch()"
+                    @blur="$v.URL.$touch()"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -279,18 +276,16 @@
               <v-layout row wrap>
                 <v-flex xs12 sm6>
                   <v-checkbox
-                    v-model="checkbox"
-                    :error-messages="checkboxErrors"
+                    v-model="isNotification"
                     label="Send as Push Notification?"
                     required
-                    @change="$v.checkbox.$touch()"
-                    @blur="$v.checkbox.$touch()"
+                    @change="$v.isNotification.$touch()"
+                    @blur="$v.isNotification.$touch()"
                   ></v-checkbox>
                 </v-flex>
                 <v-flex xs12 sm6>
                   <v-text-field
                     v-model="cta"
-                    :error-messages="ctaErrors"
                     :counter="150"
                     label="Call to action"
                     required
@@ -300,15 +295,15 @@
                 </v-flex>
               </v-layout>
 
-              <v-select
-                v-model="select"
-                :items="items"
-                :error-messages="selectErrors"
-                label="Item"
-                required
-                @change="$v.select.$touch()"
-                @blur="$v.select.$touch()"
-              ></v-select>
+              <v-flex xs12 sm6>
+                  <v-text-field
+                    v-model="message"
+                    :counter="150"
+                    label="Marketing message for notification"
+                    @input="$v.message.$touch()"
+                    @blur="$v.message.$touch()"
+                  ></v-text-field>
+              </v-flex>
 
               <v-btn @click="submit">submit</v-btn>
               <v-btn @click="clear">clear</v-btn>
@@ -324,6 +319,9 @@
 // import DateField from "@/components/helper/DateField";
 import DropzoneComp from "@/components/DropzoneComp";
 
+
+
+
 export default {
   name: "Deals",
   components: {
@@ -337,11 +335,10 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      interest: "",
+      interest: 20,
+      radius: 15,
 
-      selectErrors: ["Select more than one."],
-      ctaErrors: ["Call to action please."],
-
+      custTitle: "Custome Title",
       ctmMatrix: ["car", "health", "home", "foo", "bar", "fizz", "buzz"],
       targetInterests: ["car", "health", "home", "foo"],
 
@@ -357,21 +354,30 @@ export default {
       miniVariant: true,
       right: true,
       rightDrawer: true,
-      title: "Wireframe",
+      internalcode: "Wireframe",
       gradient: "to top, #1c3e94, #1c3e94",
 
       items: [],
       search: null,
-      select: null,
+      curLocation: null,
       states: ["Brisbane", "Sydney", "Melbourne"],
-
-      slider: 45,
 
       dateActivation: "2019-06-05",
       dateExpires: "2019-06-07",
       inputRules: [v => v.length > 0 || "Input value please."],
       itemCount: [v => v.length > 0 || "Select more than 1"],
-      imageUrl: null
+
+      description: "This is an offer",
+      URL: "http://www.www.www/",
+
+      menuDateActivation: null,
+      menuDateExpires: null,
+      isNotification: true,
+      cta: "Submit an Offer",
+      message: "Message",
+      name: "",
+      premium: true,
+      brand: true,
     };
   },
   watch: {
@@ -382,46 +388,63 @@ export default {
   methods: {
     sendData() {
       this.loading = true;
-      console.log(this.$store);
-      let data = {offer: {
-            userId: "andres@ctm.app",
-            type: "Offer",
-            imageUrl: this.$refs.dropzone.getFiles(),
-            title: this.name,
-            content: "string",
-            openUrl: "string",
-            active: this.dateActivation,
-            expire: this.dateExpires
-          },
-          target: {
-            internal: this.name,
-            type: "Offer",
-            location: this.select,
-            interests: this.targetInterests,
-            interestMin: this.interest,
-            premium: true,
-            brand: true,
-            postCodes: this.targetPostCode,
-            geoTarget: {
-              latitude: 0,
-              longitude: 0,
-              radius: this.slider
-            },
-            sendNotification: new Date(),
-            message: "string"
-          }};
+      let files = this.$refs.dropzone.getFiles();
+      let file = files[0];
+      
       this.$store
-        .dispatch("app/sendoffer", {
-          data
+        .dispatch("app/upload_image", {
+          file
         })
         .then(() => {
-          this.loading = false;
-          this.$router.push("/");
+          console.log("Upload Success!");
         })
         .catch(err => {
           this.loading = false;
           console.log(err);
+          return;
         });
+      
+      let data = {offer: {
+        userId: "andres@ctm.app",
+        type: "Offer",
+        imageUrl: file.name,
+        title: this.internalcode,
+        content: "This is a content",
+        openUrl: this.URL,
+        active: this.dateActivation,
+        expire: this.dateExpires
+      },
+      target: {
+        internal: this.internalcode,
+        type: "Offer",
+        location: this.curLocation,
+        interests: this.targetInterests,
+        interestMin: this.interest,
+        premium: true,
+        brand: true,
+        postCodes: this.targetPostCode,
+        geoTarget: {
+          latitude: 13.95,
+          longitude: 70.45,
+          radius: this.radius
+        },
+        sendNotification: this.isNotification,
+        message: this.message
+      }};
+
+      console.log(data);
+      this.$store
+      .dispatch("app/sendoffer", {
+        data
+      })
+      .then(() => {
+        this.loading = false;
+        this.$router.push("/deals");
+      })
+      .catch(err => {
+        this.loading = false;
+        console.log(err);
+      });
     },
     querySelections(v) {
       this.loading = true;
@@ -461,7 +484,6 @@ export default {
       }
     },
     clear() {
-      this.interest = "";
       this.$refs.form2.reset();
       this.$refs.form3.reset();
       this.e1 = 1;

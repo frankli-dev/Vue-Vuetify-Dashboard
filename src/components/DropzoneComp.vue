@@ -2,7 +2,6 @@
   <vue-dropzone
     :options="dropzoneOptions"
     :use-custom-slot="true"
-    @vdropzone-file-added="afterComplete"
     ref="myDropzone"
   >
     <div class="dropzone-custom-content">
@@ -14,8 +13,10 @@
 
 <script>
 import vue2Dropzone from "vue2-dropzone";
-import * as AzureStorage from "azure-storage";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
+
+
+
 export default {
   components: {
     vueDropzone: vue2Dropzone
@@ -23,6 +24,7 @@ export default {
   data: function() {
     return {
       dropzoneOptions: {
+        id: "mydropzone",
         url: "https://httpbin.org/post",
         thumbnailWidth: 200,
         addRemoveLinks: true
@@ -32,39 +34,6 @@ export default {
   methods: {
     getFiles() {
       return this.$refs.myDropzone.getAcceptedFiles();
-    },
-    afterComplete(file) {
-      let blobUri = "https://" + "STORAGE_ACCOUNT" + ".blob.core.windows.net";
-      let blobService = AzureStorage.Blob.createBlobServiceWithSas(
-        blobUri,
-        "SAS_TOKEN"
-      );
-      // If one file has been selected in the HTML file input element
-
-      let customBlockSize =
-        file.size > 1024 * 1024 * 32 ? 1024 * 1024 * 4 : 1024 * 512;
-      blobService.singleBlobPutThresholdInBytes = customBlockSize;
-
-      let speedSummary = blobService.createBlockBlobFromBrowserFile(
-        "mycontainer",
-        file.name,
-        file,
-        {
-          blockSize: customBlockSize
-        },
-        function(error, result, response) {
-          if (error) {
-            // Upload blob failed
-            console.log(error);
-          } else {
-            // Upload successfully
-            console.log("Upload successfully");
-            console.log(result);
-          }
-          console.log(response);
-        }
-      );
-      console.log(speedSummary);
     }
   }
 };
