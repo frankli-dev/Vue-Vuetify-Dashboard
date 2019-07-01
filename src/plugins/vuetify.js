@@ -1,6 +1,7 @@
 import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import Vuetify from "vuetify";
 import "../theme/default.styl";
+
 Vue.use(Vuetify, {
   theme: {
     primary: "#1C3F94",

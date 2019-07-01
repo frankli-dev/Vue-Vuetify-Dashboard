@@ -2,21 +2,15 @@
   <v-container fluid>
     <v-stepper v-model="e1">
       <v-stepper-header>
-        <v-stepper-step :complete="e1 > 1" step="1" editable=""
-          >Target</v-stepper-step
-        >
+        <v-stepper-step :complete="e1 > 1" step="1" editable>Target</v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-stepper-step :complete="e1 > 2" step="2" editable=""
-          >Zone</v-stepper-step
-        >
+        <v-stepper-step :complete="e1 > 2" step="2" editable>Zone</v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-stepper-step :complete="e1 > 3" step="3" editable=""
-          >Offer</v-stepper-step
-        >
+        <v-stepper-step :complete="e1 > 3" step="3" editable>Offer</v-stepper-step>
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
@@ -34,11 +28,7 @@
                   :rules="itemCount"
                 >
                   <template v-slot:selection="data">
-                    <v-chip
-                      :selected="data.selected"
-                      close
-                      @input="remove(data.item)"
-                    >
+                    <v-chip :selected="data.selected" close @input="remove(data.item)">
                       <strong>{{ data.item }}</strong>&nbsp;
                       <span>(interest)</span>
                     </v-chip>
@@ -50,23 +40,13 @@
                 <v-slider v-model="interest" thumb-label></v-slider>
               </v-flex>
               <v-flex xs12 sm12 md12>
-              <v-layout style="line-height:65px">
-                Premium  
-              <v-switch
-                v-model="premium"
-                hide-details
-                style="max-width:40px"
-              ></v-switch>
-              Standard
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           
-              Fuel  
-              <v-switch
-                v-model="brand"
-                hide-details
-                style="max-width:40px"
-              ></v-switch>
-              Brand
-              </v-layout>
+                <v-layout style="line-height:65px">
+                  Premium
+                  <v-switch v-model="premium" hide-details style="max-width:40px"></v-switch>Standard
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Fuel
+                  <v-switch v-model="brand" hide-details style="max-width:40px"></v-switch>Brand
+                </v-layout>
               </v-flex>
             </v-card>
 
@@ -78,48 +58,43 @@
 
         <v-stepper-content step="2">
           <v-form ref="form2">
-            <v-flex xs6 sm12 md6>
-                <v-select
-                  v-model="targetInterests"
-                  :items="ctmMatrix"
-                  box
-                  chips
-                  label="Type"
-                  multiple
-                  :rules="itemCount"
-                ></v-select>
-              </v-flex>
             <v-expansion-panel v-model="panel">
               <v-expansion-panel-content>
                 <template v-slot:header>
                   <div>Post Code</div>
                 </template>
-                <v-card>
-                  <v-select
+                <v-card class="mb-5">
+                  <v-combobox
                     v-model="targetPostCode"
                     :items="postCode"
-                    box
-                    chips
                     label="Post Code(s)"
+                    chips
+                    clearable
+                    solo
                     multiple
                     :rules="itemCount"
-                  ></v-select>
+                  >
+                    <template v-slot:selection="data">
+                      <v-chip :selected="data.selected" close @input="remove(data.item)">
+                        <strong>{{ data.item }}</strong>&nbsp;
+                        <span></span>
+                      </v-chip>
+                    </template>
+                  </v-combobox>
                 </v-card>
               </v-expansion-panel-content>
               <v-expansion-panel-content>
                 <template v-slot:header>
                   <div>Location and Radius</div>
                 </template>
-                <v-card>
+                <v-card class="mb-5">
                   <vuetify-google-autocomplete
                     ref="curLocation"
                     id="map"
-                    label="Search Address"
-                    placeholder="Please type your address"
+                    append-icon="search"
+                    placeholder="Input your location"
                     v-on:placechanged="getAddressData"
-                  >
-                  </vuetify-google-autocomplete>
-
+                  ></vuetify-google-autocomplete>
                   <v-subheader class="pl-0">Radius</v-subheader>
                   <v-slider v-model="radius" thumb-label></v-slider>
                 </v-card>
@@ -134,7 +109,7 @@
 
         <v-stepper-content step="3">
           <v-form ref="form3">
-            <DropzoneComp ref="dropzone"/>
+            <DropzoneComp ref="dropzone" />
             <v-container>
               <v-layout row wrap>
                 <v-flex xs12 sm4>
@@ -209,18 +184,12 @@
                     </template>
                     <v-date-picker v-model="dateActivation" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="menuDateActivation = false"
-                        >Cancel</v-btn
-                      >
+                      <v-btn flat color="primary" @click="menuDateActivation = false">Cancel</v-btn>
                       <v-btn
                         flat
                         color="primary"
                         @click="$refs.menuDateActivation.save(dateActivation)"
-                        >OK</v-btn
-                      >
+                      >OK</v-btn>
                     </v-date-picker>
                   </v-menu>
                   <!-- <v-text-field
@@ -254,18 +223,12 @@
                     </template>
                     <v-date-picker v-model="dateExpires" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="menuDateExpires = false"
-                        >Cancel</v-btn
-                      >
+                      <v-btn flat color="primary" @click="menuDateExpires = false">Cancel</v-btn>
                       <v-btn
                         flat
                         color="primary"
                         @click="$refs.menuDateExpires.save(dateExpires)"
-                        >OK</v-btn
-                      >
+                      >OK</v-btn>
                     </v-date-picker>
                   </v-menu>
                   <!-- <v-text-field
@@ -299,17 +262,18 @@
               </v-layout>
 
               <v-flex xs12 sm6>
-                  <v-text-field
-                    v-model="message"
-                    :counter="150"
-                    label="Marketing message for notification"
-                    @input="$v.message.$touch()"
-                    @blur="$v.message.$touch()"
-                  ></v-text-field>
+                <v-text-field
+                  v-model="message"
+                  :counter="150"
+                  label="Marketing message for notification"
+                  @input="$v.message.$touch()"
+                  @blur="$v.message.$touch()"
+                ></v-text-field>
               </v-flex>
 
               <v-btn @click="submit">submit</v-btn>
               <v-btn @click="clear">clear</v-btn>
+              <v-progress-circular :indeterminate="isLoading" :value="0" size="24" class="ml-2"></v-progress-circular>
             </v-container>
           </v-form>
         </v-stepper-content>
@@ -321,9 +285,6 @@
 <script>
 // import DateField from "@/components/helper/DateField";
 import DropzoneComp from "@/components/DropzoneComp";
-
-
-
 
 export default {
   name: "Deals",
@@ -375,7 +336,8 @@ export default {
       itemCount: [v => v.length > 0 || "Select more than 1"],
 
       description: "This is an offer",
-      URL: "https://www.experienceoz.com.au/en/brisbane/brisbane-to-movie-world-plus-entry/brisbane-to-warner-bros-movie-world-including-entry",
+      URL:
+        "https://www.experienceoz.com.au/en/brisbane/brisbane-to-movie-world-plus-entry/brisbane-to-warner-bros-movie-world-including-entry",
 
       menuDateActivation: null,
       menuDateExpires: null,
@@ -384,75 +346,80 @@ export default {
       message: "Message",
       name: "",
       premium: true,
-      brand: true,
+      brand: true
     };
   },
   methods: {
-    getAddressData: function (addressData, placeResultData, id) {
-        this.curLocation = addressData;
+    getAddressData: function(addressData, placeResultData, id) {
+      this.curLocation = addressData;
+      console.log(addressData, placeResultData, id);
     },
-    remove (item) {
-        this.targetInterests.splice(this.targetInterests.indexOf(item), 1)
-        this.targetInterests = [...this.targetInterests]
-      },
+    remove(item) {
+      this.targetInterests.splice(this.targetInterests.indexOf(item), 1);
+      this.targetInterests = [...this.targetInterests];
+    },
     sendData() {
       this.loading = true;
+
       let files = this.$refs.dropzone.getFiles();
       let file = files[0];
-      
+
       this.$store
-      .dispatch("app/upload_image", {
-        file
-      })
-      .then(resp => {
-        console.log("Upload Success!");
-        let data = {offer: {
-          type: "Offer",
-          imageUrl: "https://ctmdevblobstore.blob.core.windows.net/offers/" + resp,
-          title: this.internalcode,
-          content: "This is a content",
-          openUrl: this.URL,
-          active: new Date(this.dateActivation).toISOString(),
-          expire: new Date(this.dateExpires).toISOString()
-        },
-        target: {
-          internal: this.internalcode,
-          type: "Offer",
-          location: "Home",
-          interests: this.targetInterests,
-          interestMin: this.interest,
-          premium: true,
-          brand: true,
-          postCodes: this.targetPostCode,
-          geoTarget: {
-            latitude: 0,
-            longitude: 0,
-            radius: this.radius
-          },
-          sendNotification: new Date().toISOString(),
-          message: this.message
-        }};
-
-        console.log(data);
-
-        this.$store
-        .dispatch("app/sendoffer", {
-          data
+        .dispatch("app/upload_image", {
+          file
         })
-        .then(() => {
-          this.loading = false;
-          this.$router.push("/deals");
+        .then(resp => {
+          console.log("Upload Success!");
+          let data = {
+            offer: {
+              type: "Offer",
+              imageUrl:
+                "https://ctmdevblobstore.blob.core.windows.net/offers/" + resp,
+              title: this.internalcode,
+              content: "This is a content",
+              openUrl: this.URL,
+              active: new Date(this.dateActivation).toISOString(),
+              expire: new Date(this.dateExpires).toISOString()
+            },
+            target: {
+              internal: this.internalcode,
+              type: "Offer",
+              location: "Home",
+              interests: this.targetInterests,
+              interestMin: this.interest,
+              premium: true,
+              brand: true,
+              postCodes: this.targetPostCode,
+              geoTarget: {
+                latitude: 0,
+                longitude: 0,
+                radius: this.radius
+              },
+              sendNotification: new Date().toISOString(),
+              message: this.message
+            }
+          };
+
+          console.log(data);
+
+          this.$store
+            .dispatch("app/sendoffer", {
+              data
+            })
+            .then(() => {
+              this.loading = false;
+              this.$router.push("/deals");
+            })
+            .catch(err => {
+              this.loading = false;
+              console.log(err);
+            });
         })
         .catch(err => {
           this.loading = false;
           console.log(err);
+          return;
         });
-      })
-      .catch(err => {
-        this.loading = false;
-        console.log(err);
-        return;
-      });
     },
     querySelections(v) {
       this.loading = true;
