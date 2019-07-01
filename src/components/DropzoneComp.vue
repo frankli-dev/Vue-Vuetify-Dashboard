@@ -3,6 +3,7 @@
     :options="dropzoneOptions"
     :use-custom-slot="true"
     ref="myDropzone"
+    id=0xffff0122
   >
     <div class="dropzone-custom-content">
       <h3 class="dropzone-custom-title">Drag and drop to upload content!</h3>

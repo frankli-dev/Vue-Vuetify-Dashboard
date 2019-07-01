@@ -11,6 +11,7 @@ import "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "font-awesome/css/font-awesome.css";
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
+import Vuetify from "vuetify/lib";
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
@@ -24,7 +25,6 @@ Vue.prototype.$http.defaults.headers.common["Content-Type"] =
 Vue.use(VuetifyGoogleAutocomplete, {
   apiKey: 'AIzaSyCpJOWuQiXHTAnmdxgqjPRCwOKkTllFtsg'
 });
-
 
 new Vue({
   router,

@@ -108,14 +108,15 @@
               </v-expansion-panel-content>
               <v-expansion-panel-content>
                 <template v-slot:header>
-                  <div>Location &amp; radius</div>
+                  <div>Location and Radius</div>
                 </template>
                 <v-card>
                   <vuetify-google-autocomplete
-                      ref="curLocation"
-                      id="map"
-                      placeholder="Please type your address"
-                      v-on:placechanged="getAddressData"
+                    ref="curLocation"
+                    id="map"
+                    label="Search Address"
+                    placeholder="Please type your address"
+                    v-on:placechanged="getAddressData"
                   >
                   </vuetify-google-autocomplete>
 
@@ -433,7 +434,7 @@ export default {
         }};
 
         console.log(data);
-        
+
         this.$store
         .dispatch("app/sendoffer", {
           data
