@@ -31,7 +31,6 @@
                   clearable
                   solo
                   multiple
-                  v-validate="required"
                   :rules="itemCount"
                 >
                   <template v-slot:selection="data">
@@ -87,7 +86,6 @@
                   chips
                   label="Type"
                   multiple
-                  v-validate="required"
                   :rules="itemCount"
                 ></v-select>
               </v-flex>
@@ -104,7 +102,6 @@
                     chips
                     label="Post Code(s)"
                     multiple
-                    v-validate="required"
                     :rules="itemCount"
                   ></v-select>
                 </v-card>
@@ -114,20 +111,13 @@
                   <div>Location &amp; radius</div>
                 </template>
                 <v-card>
-                  <v-autocomplete
-                    v-model="curLocation"
-                    :items="items"
-                    :loading="isLoading"
-                    :search-input.sync="search"
-                    color="white"
-                    hide-no-data
-                    hide-selected
-                    item-text="Description"
-                    item-value="API"
-                    label="Input your location"
-                    placeholder="Location"
-                    return-object
-                  ></v-autocomplete>
+                  <vuetify-google-autocomplete
+                      ref="curLocation"
+                      id="map"
+                      placeholder="Please type your address"
+                      v-on:placechanged="getAddressData"
+                  >
+                  </vuetify-google-autocomplete>
 
                   <v-subheader class="pl-0">Radius</v-subheader>
                   <v-slider v-model="radius" thumb-label></v-slider>
@@ -396,29 +386,10 @@ export default {
       brand: true,
     };
   },
-  watch: {
-    search (val) {
-      // Items have already been loaded
-      if (this.items.length > 0) return
-
-      // Items have already been requested
-      if (this.isLoading) return
-
-      this.isLoading = true
-
-      // Lazily load input items
-      fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=paris&key=AIzaSyCpJOWuQiXHTAnmdxgqjPRCwOKkTllFtsg')
-        .then(res => res.json())
-        .then(res => {
-          console.log(res.predictions)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => (this.isLoading = false))
-    }
-  },
   methods: {
+    getAddressData: function (addressData, placeResultData, id) {
+        this.curLocation = addressData;
+    },
     remove (item) {
         this.targetInterests.splice(this.targetInterests.indexOf(item), 1)
         this.targetInterests = [...this.targetInterests]
@@ -441,47 +412,47 @@ export default {
           return;
         });
       
-      let data = {offer: {
-        userId: "andres@ctm.app",
-        type: "Offer",
-        imageUrl: file.name,
-        title: this.internalcode,
-        content: "This is a content",
-        openUrl: this.URL,
-        active: this.dateActivation,
-        expire: this.dateExpires
-      },
-      target: {
-        internal: this.internalcode,
-        type: "Offer",
-        location: this.curLocation,
-        interests: this.targetInterests,
-        interestMin: this.interest,
-        premium: true,
-        brand: true,
-        postCodes: this.targetPostCode,
-        geoTarget: {
-          latitude: 13.95,
-          longitude: 70.45,
-          radius: this.radius
-        },
-        sendNotification: this.isNotification,
-        message: this.message
-      }};
+      // let data = {offer: {
+      //   userId: "andres@ctm.app",
+      //   type: "Offer",
+      //   imageUrl: file.name,
+      //   title: this.internalcode,
+      //   content: "This is a content",
+      //   openUrl: this.URL,
+      //   active: this.dateActivation,
+      //   expire: this.dateExpires
+      // },
+      // target: {
+      //   internal: this.internalcode,
+      //   type: "Offer",
+      //   location: this.curLocation,
+      //   interests: this.targetInterests,
+      //   interestMin: this.interest,
+      //   premium: true,
+      //   brand: true,
+      //   postCodes: this.targetPostCode,
+      //   geoTarget: {
+      //     latitude: 13.95,
+      //     longitude: 70.45,
+      //     radius: this.radius
+      //   },
+      //   sendNotification: this.isNotification,
+      //   message: this.message
+      // }};
 
-      console.log(data);
-      this.$store
-      .dispatch("app/sendoffer", {
-        data
-      })
-      .then(() => {
-        this.loading = false;
-        this.$router.push("/deals");
-      })
-      .catch(err => {
-        this.loading = false;
-        console.log(err);
-      });
+      // console.log(data);
+      // this.$store
+      // .dispatch("app/sendoffer", {
+      //   data
+      // })
+      // .then(() => {
+      //   this.loading = false;
+      //   this.$router.push("/deals");
+      // })
+      // .catch(err => {
+      //   this.loading = false;
+      //   console.log(err);
+      // });
     },
     querySelections(v) {
       this.loading = true;
