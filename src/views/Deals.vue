@@ -337,8 +337,8 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      interest: 20,
-      radius: 15,
+      interest: 10,
+      radius: 0,
 
       panel: [true, true],
 
@@ -354,8 +354,8 @@ export default {
       fuelBrand: ["BP", "Shell", "Caltex", "Freedom", "Puma"],
       targetFuelBrand: ["BP", "Shell", "Caltex", "Freedom", "Puma"],
 
-      postCode: ["4000", "4226", "4220", "2000", "2226", "2220"],
-      targetPostCode: ["4000", "4226"],
+      postCode: [4000, 4226, 4220, 2000, 2226, 2220],
+      targetPostCode: [4000, 4226],
 
       miniVariant: true,
       right: true,
@@ -368,13 +368,13 @@ export default {
       curLocation: null,
       states: ["Brisbane", "Sydney", "Melbourne"],
 
-      dateActivation: "2019-06-05",
-      dateExpires: "2019-06-07",
+      dateActivation: "2019-06-30",
+      dateExpires: "2019-06-30",
       inputRules: [v => v.length > 0 || "Input value please."],
       itemCount: [v => v.length > 0 || "Select more than 1"],
 
       description: "This is an offer",
-      URL: "http://www.www.www/",
+      URL: "https://www.experienceoz.com.au/en/brisbane/brisbane-to-movie-world-plus-entry/brisbane-to-warner-bros-movie-world-including-entry",
 
       menuDateActivation: null,
       menuDateExpires: null,
@@ -400,59 +400,58 @@ export default {
       let file = files[0];
       
       this.$store
-        .dispatch("app/upload_image", {
-          file
+      .dispatch("app/upload_image", {
+        file
+      })
+      .then(resp => {
+        console.log("Upload Success!");
+        let data = {offer: {
+          type: "Offer",
+          imageUrl: "https://ctmdevblobstore.blob.core.windows.net/offers/" + resp,
+          title: this.internalcode,
+          content: "This is a content",
+          openUrl: this.URL,
+          active: new Date(this.dateActivation).toISOString(),
+          expire: new Date(this.dateExpires).toISOString()
+        },
+        target: {
+          internal: this.internalcode,
+          type: "Offer",
+          location: "Home",
+          interests: this.targetInterests,
+          interestMin: this.interest,
+          premium: true,
+          brand: true,
+          postCodes: this.targetPostCode,
+          geoTarget: {
+            latitude: 0,
+            longitude: 0,
+            radius: this.radius
+          },
+          sendNotification: new Date().toISOString(),
+          message: this.message
+        }};
+
+        console.log(data);
+        
+        this.$store
+        .dispatch("app/sendoffer", {
+          data
         })
         .then(() => {
-          console.log("Upload Success!");
+          this.loading = false;
+          this.$router.push("/deals");
         })
         .catch(err => {
           this.loading = false;
           console.log(err);
-          return;
         });
-      
-      // let data = {offer: {
-      //   userId: "andres@ctm.app",
-      //   type: "Offer",
-      //   imageUrl: file.name,
-      //   title: this.internalcode,
-      //   content: "This is a content",
-      //   openUrl: this.URL,
-      //   active: this.dateActivation,
-      //   expire: this.dateExpires
-      // },
-      // target: {
-      //   internal: this.internalcode,
-      //   type: "Offer",
-      //   location: this.curLocation,
-      //   interests: this.targetInterests,
-      //   interestMin: this.interest,
-      //   premium: true,
-      //   brand: true,
-      //   postCodes: this.targetPostCode,
-      //   geoTarget: {
-      //     latitude: 13.95,
-      //     longitude: 70.45,
-      //     radius: this.radius
-      //   },
-      //   sendNotification: this.isNotification,
-      //   message: this.message
-      // }};
-
-      // console.log(data);
-      // this.$store
-      // .dispatch("app/sendoffer", {
-      //   data
-      // })
-      // .then(() => {
-      //   this.loading = false;
-      //   this.$router.push("/deals");
-      // })
-      // .catch(err => {
-      //   this.loading = false;
-      //   console.log(err);
-      // });
+      })
+      .catch(err => {
+        this.loading = false;
+        console.log(err);
+        return;
+      });
     },
     querySelections(v) {
       this.loading = true;
