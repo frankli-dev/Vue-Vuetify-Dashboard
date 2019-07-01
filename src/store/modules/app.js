@@ -51,7 +51,7 @@ const actions = {
   upload_image({ commit }, image) {
     commit("upload_image_request");
     return new Promise((resolve, reject) => {
-      let file = image.file
+      let file = image.file   
 
       var blobUri = 'https://ctmdevblobstore.blob.core.windows.net';
       var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, 'sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-08-31T07:59:25Z&st=2019-06-27T23:59:25Z&spr=https&sig=XlOMbfvTtajJ5P7hJt9425vLOaDefMAbYfOl%2F4Z5lcc%3D').withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
