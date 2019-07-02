@@ -2,7 +2,6 @@
   <div id="pageUsers">
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
-        
         <v-flex lg7 sm12 xs12>
           <plain-table></plain-table>
         </v-flex>
