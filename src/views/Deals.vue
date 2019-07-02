@@ -112,7 +112,7 @@
             <DropzoneComp ref="dropzone" />
             <v-container>
               <v-layout row wrap>
-                <v-flex xs12 sm4>
+                <v-flex xs12 sm6>
                   <v-text-field
                     v-model="internalcode"
                     :counter="50"
@@ -123,7 +123,7 @@
                     @blur="$v.internalcode.$touch()"
                   ></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm8>
+                <v-flex xs12 sm6>
                   <v-text-field
                     v-model="custTitle"
                     :counter="150"
@@ -136,107 +136,107 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
-                <v-flex xs12 sm4>
-                  <v-text-field
+                <v-flex xs12 sm6>
+                  <v-textarea
+                    outline
+                    auto-grow
                     v-model="description"
-                    :counter="50"
                     label="Description"
                     required
-                    :rules="inputRules"
-                    @input="$v.description.$touch()"
-                    @blur="$v.description.$touch()"
-                  ></v-text-field>
+                    height="200"
+                  ></v-textarea>
                 </v-flex>
-                <v-flex xs12 sm8>
-                  <v-text-field
-                    v-model="URL"
-                    :counter="150"
-                    label="URL"
-                    required
-                    :rules="inputRules"
-                    @input="$v.URL.$touch()"
-                    @blur="$v.URL.$touch()"
-                  ></v-text-field>
-                </v-flex>
-              </v-layout>
-              <v-layout row wrap>
                 <v-flex xs12 sm6>
-                  <v-menu
-                    ref="menuDateActivation"
-                    v-model="menuDateActivation"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="dateActivation"
-                    lazy
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="dateActivation"
-                        label="Activation"
-                        prepend-icon="event"
-                        v-on="on"
-                        suffix="AEST"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="dateActivation" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menuDateActivation = false">Cancel</v-btn>
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.menuDateActivation.save(dateActivation)"
-                      >OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                  <!-- <v-text-field
+                  <v-flex xs12 sm12>
+                    <v-menu
+                      ref="menuDateActivation"
+                      v-model="menuDateActivation"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      :return-value.sync="dateActivation"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="dateActivation"
+                          label="Activation"
+                          prepend-icon="event"
+                          v-on="on"
+                          suffix="AEST"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="dateActivation" no-title scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="menuDateActivation = false">Cancel</v-btn>
+                        <v-btn
+                          flat
+                          color="primary"
+                          @click="$refs.menuDateActivation.save(dateActivation)"
+                        >OK</v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                    <!-- <v-text-field
                     label="Activation"
                     value="01/07/2019 12:30:00"
                     type="date-with-time"
                     suffix="AEST"
-                  ></v-text-field>-->
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-menu
-                    ref="menuDateExpires"
-                    v-model="menuDateExpires"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="dateExpires"
-                    lazy
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="dateExpires"
-                        label="Expires"
-                        prepend-icon="event"
-                        v-on="on"
-                        suffix="AEST"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker v-model="dateExpires" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menuDateExpires = false">Cancel</v-btn>
-                      <v-btn
-                        flat
-                        color="primary"
-                        @click="$refs.menuDateExpires.save(dateExpires)"
-                      >OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                  <!-- <v-text-field
+                    ></v-text-field>-->
+                  </v-flex>
+                  <v-flex xs12 sm12>
+                    <v-menu
+                      ref="menuDateExpires"
+                      v-model="menuDateExpires"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      :return-value.sync="dateExpires"
+                      lazy
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="dateExpires"
+                          label="Expires"
+                          prepend-icon="event"
+                          v-on="on"
+                          suffix="AEST"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model="dateExpires" no-title scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="menuDateExpires = false">Cancel</v-btn>
+                        <v-btn
+                          flat
+                          color="primary"
+                          @click="$refs.menuDateExpires.save(dateExpires)"
+                        >OK</v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                    <!-- <v-text-field
                     label="Expires"
                     value="01/07/2019 12:30:00"
                     type="date-with-time"
                     suffix="AEST"
-                  ></v-text-field>-->
+                    ></v-text-field>-->
+                  </v-flex>
+
+                  <v-flex xs12 sm12>
+                    <v-text-field
+                      v-model="URL"
+                      :counter="300"
+                      label="URL"
+                      required
+                      :rules="inputRules"
+                      @input="$v.URL.$touch()"
+                      @blur="$v.URL.$touch()"
+                    ></v-text-field>
+                  </v-flex>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
@@ -261,19 +261,17 @@
                 </v-flex>
               </v-layout>
 
-              <v-flex xs12 sm6>
-                <v-text-field
+              <v-flex xs12 sm12>
+                <v-textarea
                   v-model="message"
-                  :counter="150"
+                  auto-grow
                   label="Marketing message for notification"
-                  @input="$v.message.$touch()"
-                  @blur="$v.message.$touch()"
-                ></v-text-field>
+                  outline
+                ></v-textarea>
               </v-flex>
 
-              <v-btn @click="submit">submit</v-btn>
+              <v-btn @click="submit" :loading="loading">submit</v-btn>
               <v-btn @click="clear">clear</v-btn>
-              <v-progress-circular :indeterminate="isLoading" :value="0" size="24" class="ml-2"></v-progress-circular>
             </v-container>
           </v-form>
         </v-stepper-content>
@@ -304,11 +302,18 @@ export default {
 
       panel: [true, true],
 
-      isLoading: false,
-
       custTitle: "Custome Title",
-      ctmMatrix: ["car", "health", "home", "foo", "bar", "fizz", "buzz"],
-      targetInterests: ["car", "health", "home", "foo"],
+      ctmMatrix: [
+        "car",
+        "health",
+        "home",
+        "foo",
+        "bar",
+        "fizz",
+        "buzz",
+        "travel"
+      ],
+      targetInterests: ["Travel"],
 
       fuelType: ["Premium", "Regular"],
       targetFuelType: ["Premium", "Regular"],
@@ -322,7 +327,7 @@ export default {
       miniVariant: true,
       right: true,
       rightDrawer: true,
-      internalcode: "Wireframe",
+      internalcode: "Offer test",
       gradient: "to top, #1c3e94, #1c3e94",
 
       items: [],
@@ -364,62 +369,67 @@ export default {
       let files = this.$refs.dropzone.getFiles();
       let file = files[0];
 
-      this.$store
-        .dispatch("app/upload_image", {
-          file
-        })
-        .then(resp => {
-          console.log("Upload Success!");
-          let data = {
-            offer: {
-              type: "Offer",
-              imageUrl:
-                "https://ctmdevblobstore.blob.core.windows.net/offers/" + resp,
-              title: this.internalcode,
-              content: "This is a content",
-              openUrl: this.URL,
-              active: new Date(this.dateActivation).toISOString(),
-              expire: new Date(this.dateExpires).toISOString()
-            },
-            target: {
-              internal: this.internalcode,
-              type: "Offer",
-              location: "Home",
-              interests: this.targetInterests,
-              interestMin: this.interest,
-              premium: true,
-              brand: true,
-              postCodes: this.targetPostCode,
-              geoTarget: {
-                latitude: 0,
-                longitude: 0,
-                radius: this.radius
+      return new Promise((resolve, reject) => {
+        this.$store
+          .dispatch("app/upload_image", {
+            file
+          })
+          .then(resp => {
+            console.log("Upload Success!");
+            let data = {
+              offer: {
+                type: "Offer",
+                imageUrl:
+                  "https://ctmdevblobstore.blob.core.windows.net/offers/" +
+                  resp,
+                title: this.custTitle,
+                content: "This is a content",
+                openUrl: this.URL,
+                active: new Date(this.dateActivation).toISOString(),
+                expire: new Date(this.dateExpires).toISOString()
               },
-              sendNotification: new Date().toISOString(),
-              message: this.message
-            }
-          };
+              target: {
+                internal: this.internalcode,
+                type: "Offer",
+                location: "Home",
+                interests: this.targetInterests,
+                interestMin: this.interest,
+                premium: true,
+                brand: true,
+                postCodes: this.targetPostCode,
+                geoTarget: {
+                  latitude: 0,
+                  longitude: 0,
+                  radius: this.radius
+                },
+                sendNotification: new Date().toISOString(),
+                message: this.message
+              }
+            };
 
-          console.log(data);
+            console.log(data);
 
-          this.$store
-            .dispatch("app/sendoffer", {
-              data
-            })
-            .then(() => {
-              this.loading = false;
-              this.$router.push("/deals");
-            })
-            .catch(err => {
-              this.loading = false;
-              console.log(err);
-            });
-        })
-        .catch(err => {
-          this.loading = false;
-          console.log(err);
-          return;
-        });
+            this.$store
+              .dispatch("app/sendoffer", {
+                data
+              })
+              .then(() => {
+                this.loading = false;
+                this.$router.push("/deals");
+              })
+              .catch(err => {
+                this.loading = false;
+                console.log(err);
+              });
+            resolve(resp);
+          })
+          .catch(err => {
+            this.loading = false;
+            console.log(err);
+            reject(err);
+            return;
+          });
+      });
     },
     querySelections(v) {
       this.loading = true;

@@ -29,70 +29,93 @@ const actions = {
     console.log(user);
     return new Promise((resolve, reject) => {
       commit("auth_request");
+      console.log(user);
       axios({
         url: "https://ctm-api-dev.azurewebsites.net/api/token",
         method: "post",
         data: qs.stringify(user)
       })
-      .then(resp => {
-        const token = resp.data.data.access_token;
-        console.log(token);
-        localStorage.setItem("token", token);
-        axios.defaults.headers.common["Authorization"] = token;
-        commit("auth_success", token, user);
-        resolve(resp);
-      })
-      .catch(err => {
-        commit("auth_error");
-        localStorage.removeItem("token");
-        reject(err);
-      });
+        .then(resp => {
+          const token = resp.data.data.access_token;
+          console.log(token);
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = token;
+          commit("auth_success", token, user);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("auth_error");
+          localStorage.removeItem("token");
+          reject(err);
+        });
     });
   },
   upload_image({ commit }, image) {
     commit("upload_image_request");
     return new Promise((resolve, reject) => {
-      let file = image.file   
+      axios({
+        url: "https://ctm-api-dev.azurewebsites.net/api/token",
+        method: "post",
+        data: qs.stringify({
+          username: "andres@ctm.app",
+          password: "L3tM31n@"
+        }),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json"
+        }
+      })
+        .then(resp => {
+          const token = resp.data.data.access_token;
+          console.log(token);
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = token;
 
-      var blobUri = 'https://ctmdevblobstore.blob.core.windows.net';
-      var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, 'sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-08-31T07:59:25Z&st=2019-06-27T23:59:25Z&spr=https&sig=XlOMbfvTtajJ5P7hJt9425vLOaDefMAbYfOl%2F4Z5lcc%3D').withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
+          let file = image.file
 
-      if (!blobService)
-          return;
+          var blobUri = 'https://ctmdevblobstore.blob.core.windows.net';
+          var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, 'sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-08-31T07:59:25Z&st=2019-06-27T23:59:25Z&spr=https&sig=XlOMbfvTtajJ5P7hJt9425vLOaDefMAbYfOl%2F4Z5lcc%3D').withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
 
-      // Make a smaller block size when uploading small blobs
-      var blockSize = file.size > 1024 * 1024 * 32 ? 1024 * 1024 * 4 : 1024 * 512;
-      var options = {
-          storeBlobContentMD5 : false,
-          blockSize : blockSize
-      };
-      blobService.singleBlobPutThresholdInBytes = blockSize;
+          if (!blobService)
+            return;
 
-      var finishedOrError = false;
+          // Make a smaller block size when uploading small blobs
+          var blockSize = file.size > 1024 * 1024 * 32 ? 1024 * 1024 * 4 : 1024 * 512;
+          var options = {
+            storeBlobContentMD5: false,
+            blockSize: blockSize
+          };
+          blobService.singleBlobPutThresholdInBytes = blockSize;
 
-      var s = [];
-      var hexDigits = "0123456789abcdef";
-      for (var i = 0; i < 36; i++) {
-          s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-      }
-      s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-      s[8] = s[13] = s[18] = s[23] = "-";
-  
-      var uuid = s.join("");
+          var finishedOrError = false;
 
-      var arr = file.name.split('.');
-      state.azure_name = arr[0] + '.' + uuid + '.' + arr[1];
-      var speedSummary = blobService.createBlockBlobFromBrowserFile('offers', state.azure_name, file, options, function(error, result, response) {
-          finishedOrError = true;
-          if (error) {
-            commit("upload_image_failure");
-          } else {
-            commit("upload_image_success", file);
-            resolve(state.azure_name);
+          var s = [];
+          var hexDigits = "0123456789abcdef";
+          for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
           }
-      });
-      
+          s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+          s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+          s[8] = s[13] = s[18] = s[23] = "-";
+
+          var uuid = s.join("");
+
+          var arr = file.name.split('.');
+          state.azure_name = arr[0] + '.' + uuid + '.' + arr[1];
+          var speedSummary = blobService.createBlockBlobFromBrowserFile('offers', state.azure_name, file, options, function (error, result, response) {
+            finishedOrError = true;
+            if (error) {
+              commit("upload_image_failure");
+            } else {
+              commit("upload_image_success", file);
+              resolve(state.azure_name);
+            }
+          });
+        })
+        .catch(err => {
+          localStorage.removeItem("token");
+        });
+
     });
   },
   sendoffer({ commit }, offerBinding) {
@@ -102,24 +125,25 @@ const actions = {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.token}`;
-      axios.defaults.headers.common["Content-Type"] =
-        "application/json";
-      axios.defaults.headers.common["Accept"] =
-        "application/env.app.ctm.superadmin-v1+json";
+      console.log(offerBinding.data)
       axios({
         url: "https://ctm-api-dev.azurewebsites.net/api/offers/target?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjM1NTI0Yy0wMmViLTQxOWItODlkMC01ZTI2Y2QwM2I5NTciLCJzdWIiOiJiMzE2YTMzNy03YjMwLTRhYjQtYTg5Zi0zYWJmNzg1ZWU2MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdXBlckFkbWluIiwiZXhwIjoxNTYyNDE1NTgxfQ.fzvuaZelKgowWH9C0nxjtCpnSScB5q_-y8KVozi0shk",
         method: "post",
-        data: qs.stringify(offerBinding)
+        data: JSON.stringify(offerBinding.data),
+        headers: {
+          "Content-Type": "application/json-patch+json",
+          "Accept": "application/env.app.ctm.superadmin-v1+json"
+        }
       })
-      .then(resp => {
-        commit("send_offer_success", offerBinding);
-        console.log(resp);
-        resolve(resp);
-      })
-      .catch(err => {
-        commit("send_offer_failed");
-        reject(err);
-      });
+        .then(resp => {
+          commit("send_offer_success", offerBinding);
+          console.log(resp);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit("send_offer_failed");
+          reject(err);
+        });
     });
   },
   getoffer({ commit }, params) {
