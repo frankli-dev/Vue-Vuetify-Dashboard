@@ -6,112 +6,74 @@
         <v-spacer></v-spacer>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       </v-card-title>
+      <v-dialog v-model="dialog" max-width="700px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{ editedItem.title }}</span>
+          </v-card-title>
+
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm12 md12>
+                  <v-img :src="editedItem.imageUrl"></v-img>
+                </v-flex>
+                <v-flex xs12 sm12 md12>{{editedItem.content}}</v-flex>
+                <v-flex xs12 sm12 md12>
+                  <v-text-field v-model="editedItem.openUrl" readonly label="Open Url"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md5>
+                  <v-text-field v-model="editedItem.active" readonly label="Active Date"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md5>
+                  <v-text-field v-model="editedItem.expire" readonly label="Expire Date"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md2>
+                  <v-text-field v-model="editedItem.type" readonly label="Type"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="dialog = false">OK</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <v-data-table
         :headers="headers"
         :items="offers_data"
-        :search="search"
         item-key="id"
-        :expand="expand"
+        :loading="loading"
+        :pagination.sync="pagination"
+        :total-items="totalOffers"
       >
         <template v-slot:items="props">
-          <tr @click="props.expanded = !props.expanded">
-            <td class="text-xs-left">{{ props.item.target.internal }}</td>
-            <td class="text-xs-left">{{ props.item.target.interestMin }}</td>
-            <td class="text-xs-left">{{ props.item.target.brand ? "⭐" : " " }}</td>
-            <td class="text-xs-left">{{ props.item.target.premium ? "⭐" : " " }}</td>
-            <td class="text-xs-left">{{ props.item.offer.active }}</td>
-            <td class="text-xs-left">{{ props.item.offer.expire }}</td>
+          <tr>
+            <td class="text-xs-center" @click="viewDetail(props.item)">{{ props.item.title }}</td>
+            <td class="text-xs-left" @click="viewDetail(props.item)">{{ props.item.content }}</td>
+            <td class="text-xs-left" max-width="400">
+              <a target="_blank" rel="noopener noreferrer" :href="props.item.imageUrl">
+                <v-img :src="props.item.imageUrl"></v-img>
+              </a>
+            </td>
+            <td class="text-xs-left">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                :href="props.item.openUrl"
+              >{{ props.item.openUrl.length > 30 ? props.item.openUrl.slice(0, 30) + "..." : props.item.openUrl}}</a>
+            </td>
+            <td class="text-xs-center" @click="viewDetail(props.item)">{{ props.item.type }}</td>
+            <td class="text-xs-left" @click="viewDetail(props.item)">{{ props.item.active }}</td>
+            <td class="text-xs-left" @click="viewDetail(props.item)">{{ props.item.expire }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn @click="remove(props.item)" flat icon color="black">
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </td>
           </tr>
-        </template>
-        <template v-slot:expand="props">
-          <v-card flat color="blue-grey darken-2" class="white--text">
-            <v-layout row wrap>
-              <v-flex display-2>Offer</v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="Image Url" :value="props.item.offer.imageUrl" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="title" :value="props.item.offer.title" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="content" :value="props.item.offer.content" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="openUrl" :value="props.item.offer.openUrl" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field label="Active Date" :value="props.item.offer.active" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field label="Expire Date" :value="props.item.offer.expire" readonly box></v-text-field>
-              </v-flex>
-              <v-flex display-2>Target</v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field
-                  label="Internal Code"
-                  :value="props.item.target.internal"
-                  readonly
-                  box
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm12 md12>
-                <v-text-field label="Location" :value="props.item.target.location" readonly box></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-combobox
-                  box
-                  v-model="props.item.target.interests"
-                  label="Interest Category"
-                  chips
-                  readonly
-                  multiple
-                ></v-combobox>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-combobox
-                  box
-                  v-model="props.item.target.postCodes"
-                  label="postCodes"
-                  chips
-                  readonly
-                  multiple
-                ></v-combobox>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-text-field
-                  box
-                  label="sendNotification"
-                  :value="props.item.target.sendNotification"
-                  readonly
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm1 md2>
-                <v-badge right>
-                  <template v-slot:badge>
-                    <span>{{props.item.target.interestMin}}</span>
-                  </template>
-
-                  <v-flex title>Interest</v-flex>
-                </v-badge>
-              </v-flex>
-              <v-flex xs6 sm3 md2 title>Premium {{ props.item.target.premium ? "⭐" : " " }}</v-flex>
-              <v-flex xs6 sm2 md2 title>Brand {{ props.item.target.brand ? "⭐" : " " }}</v-flex>
-              <br />
-              <v-flex xs12 sm12 md12>
-                <v-textarea box label="Message" :value="props.item.target.message" readonly></v-textarea>
-              </v-flex>
-              <v-btn color="red" @click="setExpire(props.item.id)">Cancel</v-btn>
-            </v-layout>
-          </v-card>
-        </template>
-        <template v-slot:no-results>
-          <v-alert
-            :value="true"
-            color="error"
-            icon="warning"
-          >Your search for "{{ search }}" found no results.</v-alert>
         </template>
       </v-data-table>
     </v-card>
@@ -119,57 +81,112 @@
 </template>
 
 <script>
-import Offers from "@/api/offers";
 import { setTimeout } from "timers";
 
 export default {
-  name: "DealsView",
-  method: {
-    setExpire(id) {
-      console.log(this.offers_data[id - 1]);
-    }
-  },
   data() {
     return {
+      dialog: false,
+      editedItem: {
+        imageUrl:
+          "https://www.repco.com.au/medias/logo-repco.png?context=bWFzdGVyfGltYWdlc3wxMzA1MXxpbWFnZS9wbmd8c3lzLW1hc3Rlci9pbWFnZXMvaDhmL2hlZC84Nzk2MTYyMDY0NDE0L2xvZ28tcmVwY28ucG5nfDcyNGYwN2U0Mzg4M2UzOTk0MTdhOWNhMzE0ZTg5YjBhODlmZDU5ZDdjOGJjMjk4NDA2NDRlNDEzZGViZjMyZjM",
+        title: "10% off",
+        content: "Autoclub members",
+        openUrl: "https://www.repco.com.au/en/sycs",
+        type: 0,
+        active: "2019-06-17T01:43:48.513",
+        expire: "2019-07-30T01:43:48.513"
+      },
+      totalOffers: 0,
+      pagination: {},
       loading: false,
       search: "",
-      expand: false,
+      count: 5,
+      page: 1,
       headers: [
-        { text: "Internal Code", value: "target.internal" },
-        { text: "Interest Min", value: "target.interestMin" },
-        { text: "Brand", value: "target.brand" },
-        { text: "Premium", value: "target.premium" },
-        { text: "Activation Date", value: "offer.active" },
-        { text: "Expires Date", value: "offer.expire" }
+        { text: "Title", value: "title", align: "center", width: "150" },
+        { text: "Content", value: "content", align: "center", width: "200" },
+        { text: "Image", value: "imageUrl", width: "200", align: "center" },
+        { text: "OpenUrl", value: "openUrl", align: "center", width: "200" },
+        { text: "Type", value: "type", align: "center", width: "50" },
+        { text: "Active", value: "active", align: "center" },
+        { text: "Expire", value: "expire", align: "center" },
+        {
+          text: "Actions",
+          value: "name",
+          sortable: false,
+          align: "center",
+          width: "50"
+        }
       ],
-      offers_data: Offers
+      offers_data: []
     };
   },
-  created() {
-    this.loading = true;
-    // this.$store.dispatch("app/getoffer", {
-    //   params: {
-    //     search: "string",
-    //     sort: "string",
-    //     Count: 10,
-    //     SinceId: 0,
-    //     MaxId: 100,
-    //     Page: 0,
-    //     Fields: "*"
-    //   }
-    // })
-    // .then(() => {
-    //   this.loading = false;
-    //   this.$router.push("/");
-    // })
-    // .catch(err => {
-    //   this.loading = false;
-    //   console.log(err);
-    // });
-    setTimeout(() => {
-      this.offers_data = Offers;
-      this.loading = false;
-    }, 500);
+  methods: {
+    viewDetail(item) {
+      this.editedItem = item;
+
+      this.dialog = true;
+    },
+    remove(item) {
+      console.log(item);
+    },
+    send_request() {
+      this.loading = true;
+      return new Promise((resolve, reject) => {
+        const { sortBy, descending, page, rowsPerPage } = this.pagination;
+        this.page = page;
+        this.count = rowsPerPage;
+        if (this.count == -1) this.count = this.totalOffers;
+        this.$store
+          .dispatch("app/getoffer", {
+            params: {
+              Count: this.count,
+              Page: this.page,
+              Search: this.search
+            }
+          })
+          .then(resp => {
+            //console.log(resp.data.data);
+            let items = resp.data.data;
+            this.loading = false;
+            let total = resp.data.pagination.total;
+            resolve({
+              items,
+              total
+            });
+          })
+          .catch(err => {
+            this.loading = false;
+            console.log(err);
+          });
+      });
+    }
+  },
+  watch: {
+    pagination: {
+      handler() {
+        this.send_request().then(data => {
+          this.offers_data = data.items;
+          this.totalOffers = data.total;
+        });
+      },
+      deep: true
+    },
+    search: {
+      handler() {
+        this.send_request().then(data => {
+          this.offers_data = data.items;
+          this.totalOffers = data.total;
+        });
+      }
+    }
+  },
+  mounted() {
+    this.send_request().then(data => {
+      this.offers_data = data.items;
+      this.totalOffers = data.total;
+    });
   }
 };
 </script>

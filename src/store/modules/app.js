@@ -14,10 +14,29 @@ const state = {
   user: {},
   offer: [],
   offer_data: [],
+  user_data: [],
   image: null,
   azure_name: ""
 };
 
+function get_token() {
+  return new Promise((resolve, reject) => {
+    axios({
+        url: "https://ctm-api-dev.azurewebsites.net/api/token",
+        method: "post",
+        data: qs.stringify({
+          username: "andres@ctm.app",
+          password: "L3tM31n@"
+        })
+      })
+      .then(resp => {
+        resolve(resp);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
 // getters
 const getters = {
   isLoggedIn: state => !!state.token,
@@ -25,19 +44,18 @@ const getters = {
 };
 // actions
 const actions = {
-  login({ commit }, user) {
-    console.log(user);
+  login({
+    commit
+  }, user) {
     return new Promise((resolve, reject) => {
       commit("auth_request");
-      console.log(user);
       axios({
-        url: "https://ctm-api-dev.azurewebsites.net/api/token",
-        method: "post",
-        data: qs.stringify(user)
-      })
+          url: "https://ctm-api-dev.azurewebsites.net/api/token",
+          method: "post",
+          data: qs.stringify(user)
+        })
         .then(resp => {
           const token = resp.data.data.access_token;
-          console.log(token);
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = token;
           commit("auth_success", token, user);
@@ -50,24 +68,14 @@ const actions = {
         });
     });
   },
-  upload_image({ commit }, image) {
+  upload_image({
+    commit
+  }, image) {
     commit("upload_image_request");
     return new Promise((resolve, reject) => {
-      axios({
-        url: "https://ctm-api-dev.azurewebsites.net/api/token",
-        method: "post",
-        data: qs.stringify({
-          username: "andres@ctm.app",
-          password: "L3tM31n@"
-        }),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Accept": "application/json"
-        }
-      })
+      get_token()
         .then(resp => {
           const token = resp.data.data.access_token;
-          console.log(token);
           localStorage.setItem("token", token);
           axios.defaults.headers.common["Authorization"] = token;
 
@@ -94,8 +102,8 @@ const actions = {
           for (var i = 0; i < 36; i++) {
             s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
           }
-          s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-          s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+          s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+          s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
           s[8] = s[13] = s[18] = s[23] = "-";
 
           var uuid = s.join("");
@@ -118,26 +126,25 @@ const actions = {
 
     });
   },
-  sendoffer({ commit }, offerBinding) {
-    //console.log(offerBinding);
+  sendoffer({
+    commit
+  }, offerBinding) {
     return new Promise((resolve, reject) => {
       commit("offer_request");
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.token}`;
-      console.log(offerBinding.data)
       axios({
-        url: "https://ctm-api-dev.azurewebsites.net/api/offers/target?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjM1NTI0Yy0wMmViLTQxOWItODlkMC01ZTI2Y2QwM2I5NTciLCJzdWIiOiJiMzE2YTMzNy03YjMwLTRhYjQtYTg5Zi0zYWJmNzg1ZWU2MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdXBlckFkbWluIiwiZXhwIjoxNTYyNDE1NTgxfQ.fzvuaZelKgowWH9C0nxjtCpnSScB5q_-y8KVozi0shk",
-        method: "post",
-        data: JSON.stringify(offerBinding.data),
-        headers: {
-          "Content-Type": "application/json-patch+json",
-          "Accept": "application/env.app.ctm.superadmin-v1+json"
-        }
-      })
+          url: "https://ctm-api-dev.azurewebsites.net/api/offers/target?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjM1NTI0Yy0wMmViLTQxOWItODlkMC01ZTI2Y2QwM2I5NTciLCJzdWIiOiJiMzE2YTMzNy03YjMwLTRhYjQtYTg5Zi0zYWJmNzg1ZWU2MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdXBlckFkbWluIiwiZXhwIjoxNTYyNDE1NTgxfQ.fzvuaZelKgowWH9C0nxjtCpnSScB5q_-y8KVozi0shk",
+          method: "post",
+          data: JSON.stringify(offerBinding.data),
+          headers: {
+            "Content-Type": "application/json-patch+json",
+            "Accept": "application/env.app.ctm.superadmin-v1+json"
+          }
+        })
         .then(resp => {
           commit("send_offer_success", offerBinding);
-          console.log(resp);
           resolve(resp);
         })
         .catch(err => {
@@ -146,26 +153,91 @@ const actions = {
         });
     });
   },
-  getoffer({ commit }, params) {
-    //console.log(params);
+  getoffer({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       commit("get_offer_request");
-      axios({
-        url: "https://ctm-api-dev.azurewebsites.net/api/offers",
-        method: "get",
-        data: qs.stringify(params)
-      })
+      get_token()
         .then(resp => {
-          commit("get_offer_success", resp.data.offer);
-          resolve(resp);
-        })
-        .catch(err => {
-          commit("get_offer_failed");
-          reject(err);
+          const token = resp.data.data.access_token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${localStorage.token}`;
+          axios({
+              url: "https://ctm-api-dev.azurewebsites.net/api/offers/filter?Count=" + params.params.Count + "&Page=" + params.params.Page + "&api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjM1NTI0Yy0wMmViLTQxOWItODlkMC01ZTI2Y2QwM2I5NTciLCJzdWIiOiJiMzE2YTMzNy03YjMwLTRhYjQtYTg5Zi0zYWJmNzg1ZWU2MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdXBlckFkbWluIiwiZXhwIjoxNTYyNDE1NTgxfQ.fzvuaZelKgowWH9C0nxjtCpnSScB5q_-y8KVozi0shk",
+              method: "post",
+              data: JSON.stringify({
+                "hasFilter": true,
+                "filters": [{
+                  "fieldName": "content",
+                  "value": params.params.Search,
+                  "operator": 3,
+                  "tablePrefix": "FT"
+                }]
+              }),
+              headers: {
+                "Content-Type": "application/env.app.ctm.superadmin-v1+json",
+                "Accept": "application/env.app.ctm.superadmin-v1+json"
+              },
+            })
+            .then(resp => {
+              commit("get_offer_success", resp.data);
+              resolve(resp);
+            })
+            .catch(err => {
+              commit("get_offer_failed");
+              reject(err);
+            });
         });
-    });
+    })
+
   },
-  logout({ commit }) {
+  getuser({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      commit("get_user_request");
+      get_token()
+        .then(resp => {
+          const token = resp.data.data.access_token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${localStorage.token}`;
+          axios({
+              url: "https://ctm-api-dev.azurewebsites.net/api/users/filter?Count=" + params.params.Count + "&Page=" + params.params.Page + "&api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjM1NTI0Yy0wMmViLTQxOWItODlkMC01ZTI2Y2QwM2I5NTciLCJzdWIiOiJiMzE2YTMzNy03YjMwLTRhYjQtYTg5Zi0zYWJmNzg1ZWU2MzQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdXBlckFkbWluIiwiZXhwIjoxNTYyNDE1NTgxfQ.fzvuaZelKgowWH9C0nxjtCpnSScB5q_-y8KVozi0shk",
+              method: "post",
+              data: JSON.stringify({
+                "hasFilter": true,
+                "filters": [{
+                  "fieldName": "email",
+                  "value": params.params.Search,
+                  "operator": 3,
+                  "tablePrefix": "FT"
+                }]
+              }),
+              headers: {
+                "Content-Type": "application/env.app.ctm.superadmin-v1+json",
+                "Accept": "application/env.app.ctm.superadmin-v1+json"
+              },
+            })
+            .then(resp => {
+              commit("get_user_success", resp.data);
+              resolve(resp);
+            })
+            .catch(err => {
+              commit("get_user_failed");
+              reject(err);
+            });
+        });
+    })
+
+  },
+  logout({
+    commit
+  }) {
     return new Promise(resolve => {
       commit("logout");
       localStorage.removeItem("token");
@@ -206,6 +278,16 @@ const mutations = {
     state.offer_data = offer;
   },
   get_offer_failed(state) {
+    state.status = "get_offer_failed";
+  },
+  get_user_request(state) {
+    state.status = "sending_offer_request";
+  },
+  get_user_success(state, user_data) {
+    state.status = "get_offer_success";
+    state.user_data = user_data;
+  },
+  get_user_failed(state) {
     state.status = "get_offer_failed";
   },
   offer_request(state) {

@@ -179,12 +179,6 @@
                         >OK</v-btn>
                       </v-date-picker>
                     </v-menu>
-                    <!-- <v-text-field
-                    label="Activation"
-                    value="01/07/2019 12:30:00"
-                    type="date-with-time"
-                    suffix="AEST"
-                    ></v-text-field>-->
                   </v-flex>
                   <v-flex xs12 sm12>
                     <v-menu
@@ -218,12 +212,6 @@
                         >OK</v-btn>
                       </v-date-picker>
                     </v-menu>
-                    <!-- <v-text-field
-                    label="Expires"
-                    value="01/07/2019 12:30:00"
-                    type="date-with-time"
-                    suffix="AEST"
-                    ></v-text-field>-->
                   </v-flex>
 
                   <v-flex xs12 sm12>
