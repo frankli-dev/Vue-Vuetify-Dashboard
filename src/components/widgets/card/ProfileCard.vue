@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-img src="/static/people/man/m1.jpg" height="390">
+    <v-img src="/static/avatar/man_2.jpg" height="390">
       <v-layout column class="media ma-0">
         <v-card-title>
           <v-btn dark icon>

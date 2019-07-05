@@ -69,7 +69,7 @@
             <td class="text-xs-left" @click="viewDetail(props.item)">{{ props.item.active }}</td>
             <td class="text-xs-left" @click="viewDetail(props.item)">{{ props.item.expire }}</td>
             <td class="justify-center layout px-0">
-              <v-btn @click="remove(props.item)" flat icon color="black">
+              <v-btn @click="remove(props.item)" flat icon color="red">
                 <v-icon>delete</v-icon>
               </v-btn>
             </td>

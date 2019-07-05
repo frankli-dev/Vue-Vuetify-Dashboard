@@ -75,7 +75,7 @@
                     :rules="itemCount"
                   >
                     <template v-slot:selection="data">
-                      <v-chip :selected="data.selected" close @input="remove(data.item)">
+                      <v-chip :selected="data.selected" close @input="removePost(data.item)">
                         <strong>{{ data.item }}</strong>&nbsp;
                         <span></span>
                       </v-chip>
@@ -350,6 +350,10 @@ export default {
     remove(item) {
       this.targetInterests.splice(this.targetInterests.indexOf(item), 1);
       this.targetInterests = [...this.targetInterests];
+    },
+    removePost(item) {
+      this.targetPostCode.splice(this.targetPostCode.indexOf(item), 1);
+      this.targetPostCode = [...this.targetPostCode];
     },
     sendData() {
       this.loading = true;
