@@ -7,7 +7,7 @@ const webAuth = new auth0.WebAuth({
   redirectUri: `${window.location.origin}/callback`,
   clientID: authConfig.clientId,
   responseType: "token id_token",
-  scope: "openid profile email"
+  scope: "openid"
 });
 
 const localStorageKey = "loggedIn";
