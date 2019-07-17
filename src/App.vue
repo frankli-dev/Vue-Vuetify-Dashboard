@@ -34,16 +34,24 @@ export default {
       }
     };
   },
-  created() {
-    // add app events
-    this.$http.interceptors.response.use(undefined, function(err) {
-      return new Promise(function(resolve, reject) {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch("app/logout");
-        }
-        throw err;
-      });
-    });
+  // created() {
+  //   // add app events
+  //   this.$http.interceptors.response.use(undefined, function(err) {
+  //     return new Promise(function(resolve, reject) {
+  //       if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+  //         this.$store.dispatch("app/logout");
+  //       }
+  //       throw err;
+  //     });
+  //   });
+  // },
+  async created() {
+    try {
+      await this.$auth.renewTokens();
+    } catch {
+      // Supress the 'not logged in' error as we can illegitimately get that
+      // when processing the callback url
+    }
   },
   methods: {
     openThemeSettings() {

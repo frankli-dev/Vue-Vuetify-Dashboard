@@ -4,27 +4,33 @@ import Router from "vue-router";
 import { publicRoute, protectedRoute } from "./config";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+
+import auth from "../auth/authService";
 const routes = publicRoute.concat(protectedRoute);
 
 Vue.use(Router);
 const router = new Router({
   mode: "history",
-  linkActiveClass: "active",
+  base: process.env.BASE_URL,
   routes: routes
 });
 // router gards
 router.beforeEach((to, from, next) => {
   NProgress.start();
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log(store.getters["app/isLoggedIn"]);
-    if (store.getters["app/isLoggedIn"]) {
-      next();
-      return;
+    if (auth.isAuthenticated()) {
+       return next();
     }
-    next("/auth/login");
-  } else {
-    next();
   }
+
+  if (to.path === "/callback")
+  {
+    return next();
+  }
+  
+  auth.login({ target: to.fullPath });
+
 });
 
 router.afterEach(() => {

@@ -6,23 +6,28 @@ export const publicRoute = [
     component: () =>
       import(/* webpackChunkName: "errors-404" */ "@/views/error/NotFound.vue")
   },
+  // {
+  //   path: "/auth",
+  //   component: AuthLayout,
+  //   meta: { title: "Login" },
+  //   redirect: "/auth/login",
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: "login",
+  //       name: "login",
+  //       meta: { title: "Login" },
+  //       component: () =>
+  //         import(/* webpackChunkName: "login" */ "@/views/auth/login.vue")
+  //     }
+  //   ]
+  // },
   {
-    path: "/auth",
-    component: AuthLayout,
-    meta: { title: "Login" },
-    redirect: "/auth/login",
-    hidden: true,
-    children: [
-      {
-        path: "login",
-        name: "login",
-        meta: { title: "Login" },
-        component: () =>
-          import(/* webpackChunkName: "login" */ "@/views/auth/Login.vue")
-      }
-    ]
+    path: "/callback",
+    name: "callback",
+    component: () =>
+      import("@/views/auth/Callback.vue")
   },
-
   {
     path: "/404",
     name: "404",
@@ -45,7 +50,7 @@ export const protectedRoute = [
     path: "/",
     component: DefaultLayout,
     meta: { title: "Home", group: "apps", icon: "", requiresAuth: true },
-    redirect: "/deals",
+    redirect: "/dashboard",
     children: [
       {
         path: "/users",

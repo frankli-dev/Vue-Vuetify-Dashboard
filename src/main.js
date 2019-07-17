@@ -6,6 +6,10 @@ import router from "./router/";
 import store from "./store/";
 import Axios from "axios";
 
+import AuthPlugin from "./plugins/auth";
+
+
+Vue.use(AuthPlugin);
 import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 import "./registerServiceWorker";
 import "./plugins/vuetify";
@@ -18,6 +22,7 @@ const token = localStorage.getItem("token");
 if (token) {
   Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
 }
+
 // Vue.prototype.$http.defaults.headers.common["Accept"] = "application/json";
 // Vue.prototype.$http.defaults.headers.common["Content-Type"] =
 //   "application/x-www-form-urlencoded";

@@ -43,7 +43,7 @@
       >
         <v-btn icon large flat slot="activator">
           <v-avatar size="30px">
-            <img src="/static/avatar/man_4.jpg" alt="Michael Wang" />
+            <img :src="profile.picture" alt="Michael Wang" />
           </v-avatar>
         </v-btn>
         <v-list class="pa-0">
@@ -80,6 +80,8 @@ export default {
   },
   data() {
     return {
+      isAuthenticated: false,
+      profile: {},
       items: [
         {
           icon: "account_circle",
@@ -116,9 +118,13 @@ export default {
     },
     handleLogut() {
       //handle logout
-      this.$store.dispatch("app/logout").then(() => {
-        this.$router.push("/auth/login");
-      });
+      this.$auth.logOut();
+      this.$router.push({ path: "/" });
+    },
+    handleLoginEvent(data) {
+      console.log(data);
+      this.isAuthenticated = data.loggedIn;
+      this.profile = data.profile;
     },
     handleSetting() {},
     handleProfile() {}
